@@ -1,0 +1,9 @@
+employee
+warehouse
+drone
+equipment
+purchaseorder
+user
+damage
+rental
+review
