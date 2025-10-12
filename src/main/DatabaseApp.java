@@ -8,9 +8,9 @@ public final class DatabaseApp {
     
     private static Database database; 
 
+    // so user knows their options when choosing a table to search, delete, etc.
     private static final String TableNames = "Employees, Warehouses";
 
-    // no argument constructor
     private DatabaseApp() {
     }
 
@@ -27,8 +27,9 @@ public final class DatabaseApp {
         System.out.println("Exit: quit the program");
     }
 
-    private static String search(String type, String id) {
-        ArrayList<String[]> data = database.DataMap.get(type);
+    // Searches a particlar table for a specific id
+    private static String search(String table, String id) {
+        ArrayList<String[]> data = database.DataMap.get(table);
         String out = "";
         for (int i = 0; i < data.size(); i++) {
             if (data.get(i)[0].equals(id)) {
@@ -41,16 +42,15 @@ public final class DatabaseApp {
         }
 
         if (out.length() == 0) {
-            out = "Record not found";
+            out = "Record for id: "+ id + " not found";
         }
 
         return out;
     }
 
-    public static Scanner scanner;
     public static void main(String[] args) {
-        Scanner userIn = new Scanner(System.in);
 
+        Scanner userIn = new Scanner(System.in);
 
         // get data from database file
         database = new Database();

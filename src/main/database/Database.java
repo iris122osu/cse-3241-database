@@ -6,7 +6,7 @@ import java.util.Scanner;
 import java.io.File;
 import java.util.HashMap;
 
-// Object representation of 
+// Object representation of data. parsed in from a csv.
 public class Database {
 
     public HashMap<String, ArrayList<String[]>> DataMap;
@@ -26,19 +26,16 @@ public class Database {
     }
     
 
-    // This is expecting each line to say relation,att1,att2,att3,etc.
+    // This is expecting each line of the csv file to say relation,att1,att2,att3,etc.
     public void ParseFromFile(File file) {
         try (Scanner fileData = new Scanner(file)) { 
             while (fileData.hasNextLine()) {
                 String nextLine = fileData.nextLine();
-                // System.out.println(nextLine);
                 if (nextLine.strip().length() > 0) {
                     String[] values = nextLine.split(",");
-                    // System.out.println(values[0]);
-                    DataMap.get(values[0]).add(Arrays.copyOfRange(values, 1, values.length - 1));
+                    DataMap.get(values[0]).add(Arrays.copyOfRange(values, 1, values.length));
                 }
             }
-            // System.out.println(Employees.get(0)[2]);
             fileData.close();
         } catch (Exception e) {
             System.err.println(e);

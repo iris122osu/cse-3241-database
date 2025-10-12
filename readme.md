@@ -1,0 +1,1 @@
+The app currently supports search, add, update, and delete for Employees and Warehouses
