@@ -74,9 +74,9 @@ public final class DatabaseApp {
                     break;
                 case "search":
                     System.out.println("\nEnter the table to search ("+TableNames+"):");
-                    String name = userIn.next();
+                    String name = userIn.next().toLowerCase().strip();
                     System.out.println("Enter the id to search ("+TableNames+"):");
-                    String id = userIn.next(); 
+                    String id = userIn.next().toLowerCase().strip(); 
                     System.out.println(search(name, id));
                     break;
                 case "rent":
