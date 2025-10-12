@@ -25,6 +25,7 @@ public final class DatabaseApp {
         System.out.println("Return: register a return");
         System.out.println("Deliver: schedule a delivery");
         System.out.println("Pickup: schedule a pickup");
+        System.out.println("Options: display this list again");
         System.out.println("Exit: quit the program");
     }
 
@@ -95,15 +96,18 @@ public final class DatabaseApp {
         database = new Database();
         database.ParseFromFile(new File("src\\main\\database\\data.csv"));
         System.out.println("Data Loaded!");
+        printOptions();
         String choice = "";
 
         while (!choice.equals("exit")) {
-            printOptions();
             choice = userIn.next().toLowerCase().strip();
 
             switch (choice) {
                 case "add":
                     
+                    break;
+                case "options":
+                    printOptions();
                     break;
                 case "edit":
                     System.out.println("\nEnter the table to search ("+TableNames+"):");
