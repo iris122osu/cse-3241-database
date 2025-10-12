@@ -68,6 +68,25 @@ public final class DatabaseApp {
         return out;
     }
 
+    private static String edit(String table, String id, int index, String replacement) {
+        ArrayList<String[]> data = database.DataMap.get(table);
+        String out = "";
+        int i = 0;
+        while (out.isEmpty() && i < data.size()) {
+            if (data.get(i)[0].equals(id)) {
+                out = "Replaced " + data.get(i)[index] + " with " + replacement + ".";
+                data.get(i)[index] = replacement;
+            }
+            i++;
+        }
+
+        if (out.isEmpty()) {
+            out = "Record for id: "+ id + " not found.";
+        }
+
+        return out;
+    }
+
     public static void main(String[] args) {
 
         Scanner userIn = new Scanner(System.in);
@@ -87,21 +106,38 @@ public final class DatabaseApp {
                     
                     break;
                 case "edit":
+                    System.out.println("\nEnter the table to search ("+TableNames+"):");
+                    String editName = userIn.next().toLowerCase().strip();
+                    System.out.println("Enter the id of the record to edit (beginning with 0):");
+                    String editID = userIn.next().toLowerCase().strip(); 
+                    String editSearchReturn = search(editName, editID);
+                    System.out.println(editSearchReturn);
+                    if (editSearchReturn.contains("not found.")) {
+                        break;
+                    }
+
+                    System.out.println("Enter the index of the item to change ("+TableNames+"):");
+                    int editIndex = userIn.nextInt(); 
+                    System.out.println("Enter the new value ("+TableNames+"):");
+                    String editReplacement = userIn.next().toLowerCase().strip();
+
+                    System.out.println(edit(editName, editID, editIndex, editReplacement));
+                    
                     
                     break;
                 case "delete":
                     System.out.println("\nEnter the table to search ("+TableNames+"):");
                     String deleteName = userIn.next().toLowerCase().strip();
-                    System.out.println("Enter the id to delete ("+TableNames+"):");
+                    System.out.println("Enter the id to delete:");
                     String deleteID = userIn.next().toLowerCase().strip(); 
                     System.out.println(delete(deleteName, deleteID));
                     break;
                 case "search":
                     System.out.println("\nEnter the table to search ("+TableNames+"):");
                     String searchName = userIn.next().toLowerCase().strip();
-                    System.out.println("Enter the id to search ("+TableNames+"):");
-                    String searchId = userIn.next().toLowerCase().strip(); 
-                    System.out.println(search(searchName, searchId));
+                    System.out.println("Enter the id to search:");
+                    String searchID = userIn.next().toLowerCase().strip(); 
+                    System.out.println(search(searchName, searchID));
                     break;
                 case "rent":
                     System.out.println("\nEnter Equipment ID: ");
