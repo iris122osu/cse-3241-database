@@ -19,6 +19,7 @@ public final class DatabaseApp {
         System.out.println("Options, case insensitive:");
         System.out.println("Add: add a record");
         System.out.println("Edit: Edit a record");
+        System.out.println("Delete: Delete a record");
         System.out.println("Search: search for a record");
         System.out.println("Rent: register a rental");
         System.out.println("Return: register a return");
@@ -42,7 +43,26 @@ public final class DatabaseApp {
         }
 
         if (out.length() == 0) {
-            out = "Record for id: "+ id + " not found";
+            out = "Record for id: "+ id + " not found. ";
+        }
+
+        return out;
+    }
+
+    private static String delete(String table, String id) {
+        ArrayList<String[]> data = database.DataMap.get(table);
+        String out = "";
+        int i = 0;
+        while (out.isEmpty() && i < data.size()) {
+            if (data.get(i)[0].equals(id)) {
+                data.remove(i);
+                out = "Deleted!";
+            }
+            i++;
+        }
+
+        if (out.isEmpty()) {
+            out = "Record for id: "+ id + " not found.";
         }
 
         return out;
@@ -70,14 +90,18 @@ public final class DatabaseApp {
                     
                     break;
                 case "delete":
-                    
+                    System.out.println("\nEnter the table to search ("+TableNames+"):");
+                    String deleteName = userIn.next().toLowerCase().strip();
+                    System.out.println("Enter the id to delete ("+TableNames+"):");
+                    String deleteID = userIn.next().toLowerCase().strip(); 
+                    System.out.println(delete(deleteName, deleteID));
                     break;
                 case "search":
                     System.out.println("\nEnter the table to search ("+TableNames+"):");
-                    String name = userIn.next().toLowerCase().strip();
+                    String searchName = userIn.next().toLowerCase().strip();
                     System.out.println("Enter the id to search ("+TableNames+"):");
-                    String id = userIn.next().toLowerCase().strip(); 
-                    System.out.println(search(name, id));
+                    String searchId = userIn.next().toLowerCase().strip(); 
+                    System.out.println(search(searchName, searchId));
                     break;
                 case "rent":
                     System.out.println("\nEnter Equipment ID: ");
@@ -101,7 +125,6 @@ public final class DatabaseApp {
                     System.out.println("\nEnter User ID: ");
                     String deliverUID = userIn.next().toLowerCase().strip();
                     System.out.println("\nDelivered!");
-                    
                     break;
                 case "pickup":
                     System.out.println("\nEnter Drone ID: ");
