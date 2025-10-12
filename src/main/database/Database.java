@@ -47,7 +47,7 @@ public class Database {
         try (Scanner fileData = new Scanner(file)) { 
             while (fileData.hasNextLine()) {
                 String nextLine = fileData.nextLine();
-                System.out.println(nextLine);
+                // System.out.println(nextLine);
                 if (nextLine.strip().length() > 0) {
                     String[] values = nextLine.split(",");
 
