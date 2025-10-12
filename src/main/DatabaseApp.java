@@ -80,16 +80,37 @@ public final class DatabaseApp {
                     System.out.println(search(name, id));
                     break;
                 case "rent":
-                    
+                    System.out.println("\nEnter Equipment ID: ");
+                    String rentEID = userIn.next().toLowerCase().strip(); 
+                    System.out.println("\nEnter User ID: ");
+                    String rentUID = userIn.next().toLowerCase().strip();
+                    System.out.println("\nRented!");
                     break;
                 case "return":
-                    
+                    System.out.println("\nEnter Equipment ID: ");
+                    String returnEID = userIn.next().toLowerCase().strip(); 
+                    System.out.println("\nEnter User ID: ");
+                    String returnUID = userIn.next().toLowerCase().strip();
+                    System.out.println("\nReturned!");
                     break;
                 case "deliver":
+                    System.out.println("\nEnter Drone ID: ");
+                    String deliverDID = userIn.next().toLowerCase().strip();
+                    System.out.println("\nEnter Equipment ID: ");
+                    String deliverEID = userIn.next().toLowerCase().strip(); 
+                    System.out.println("\nEnter User ID: ");
+                    String deliverUID = userIn.next().toLowerCase().strip();
+                    System.out.println("\nDelivered!");
                     
                     break;
                 case "pickup":
-                    
+                    System.out.println("\nEnter Drone ID: ");
+                    String pickupDID = userIn.next().toLowerCase().strip();
+                    System.out.println("\nEnter Equipment ID: ");
+                    String pickupEID = userIn.next().toLowerCase().strip(); 
+                    System.out.println("\nEnter User ID: ");
+                    String pickupUID = userIn.next().toLowerCase().strip();
+                    System.out.println("\nScheduled for pickup!");
                     break;
                 default:
                     break;
