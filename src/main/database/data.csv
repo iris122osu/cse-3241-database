@@ -1,21 +1,21 @@
-employee,1234,john,doe,tech,jodoe@dot.com,1111
-employee,2345,jane,doe,tech,jadoe@dot.com,1111
-employee,3456,jess,doux,manager,jedoux@dot.com,1111
+employees,1234,john,doe,tech,jodoe@dot.com,1111
+employees,2345,jane,doe,tech,jadoe@dot.com,1111
+employees,3456,jess,doux,manager,jedoux@dot.com,1111
 
-employee,9045,jake,doux,manager,jadoux@dot.com,2222
+employees,9045,jake,doux,manager,jadoux@dot.com,2222
 
-employee,9045,june,doot,manager,judoot@dot.com,3333
+employees,9045,june,doot,manager,judoot@dot.com,3333
 
-warehouse,1111,614-123-4567,jess,doe,10,50,123 Street St., City City
-warehouse,2222,888-123-4567,jake,doux,10,50,123 Parkway Pkwy., New City City
-warehouse,3333,216-123-4567,jess,doe,10,50,123 Boulavard Blvd., Old Town City
+warehouses,1111,614-123-4567,jess,doe,10,50,123 Street St., City City
+warehouses,2222,888-123-4567,jake,doux,10,50,123 Parkway Pkwy., New City City
+warehouses,3333,216-123-4567,jess,doe,10,50,123 Boulavard Blvd., Old Town City
 
-drone,12345,Boeing,vroom,2022,full,1000,10000,ready,100,1/1/2025,1111,1234
+drones,12345,Boeing,vroom,2022,full,1000,10000,ready,100,1/1/2025,1111,1234
 
-purchaseorder,1234,1/1/2020,1/1/2025,delivered,drone,3,1111
+purchaseorders,1234,1/1/2020,1/1/2025,delivered,drone,3,1111
 
-equipment,1234,KitchenAid,Big mixing thing,red,stand mixer,1994,10,1,1x1x1.5,20,1/1/2000,1111,12345,1234
-user,1,Bob,Blah,1/1/107,4 Street St. City City, BobBlah@dot.com
-damage,1111,exploded-very bad,1/1/2017,10000000,waiting,1234
-rental,9876,out,1/2/2003,1234,1
-review,12,terrible service,-1/5,1,1234
+equipments,1234,KitchenAid,Big mixing thing,red,stand mixer,1994,10,1,1x1x1.5,20,1/1/2000,1111,12345,1234
+users,1,Bob,Blah,1/1/107,4 Street St. City City, BobBlah@dot.com
+damages,1111,exploded-very bad,1/1/2017,10000000,waiting,1234
+rentals,9876,out,1/2/2003,1234,1
+reviews,12,terrible service,-1/5,1,1234
