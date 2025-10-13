@@ -102,7 +102,7 @@ public final class DatabaseApp {
         }
 
         data.add(newRecord);
-        return "Record Added!"
+        return "Record Added!";
     }
 
     public static void main(String[] args) {
@@ -134,7 +134,7 @@ public final class DatabaseApp {
                         newRecord[i] = userIn.nextLine().strip();
                     }
 
-                    System.out.println(add(addTable, newRecord());
+                    System.out.println(add(addTable, newRecord));
                     break;
                 case "options":
                     printOptions();
