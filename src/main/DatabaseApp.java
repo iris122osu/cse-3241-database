@@ -122,7 +122,7 @@ public final class DatabaseApp {
             switch (choice) {
                 case "add":
                     System.out.println("\n Enter the table to add to ("+ TableNames +"):");
-                    String addTable = userInnext().toLowerCase().strip();
+                    String addTable = userIn.next().toLowerCase().strip();
 
                     System.out.println("How many fields does the record have? ");
                     int numFields = userIn.nextInt();
