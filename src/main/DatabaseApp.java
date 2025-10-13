@@ -88,6 +88,23 @@ public final class DatabaseApp {
         return out;
     }
 
+    private static String add(String table, String[] newRecord){
+        ArrayList<String[]> data = database.DataMap.get(table);
+
+        if(data == null) {
+            return "Error: table not found";
+        }
+
+        for (String[] record : data) {
+            if(record[0].equalsIgnoreCase(newRecord[0])){
+                return "record already exists";
+            }
+        }
+
+        data.add(newRecord);
+        return "Record Added!"
+    }
+
     public static void main(String[] args) {
 
         Scanner userIn = new Scanner(System.in);
@@ -104,7 +121,20 @@ public final class DatabaseApp {
 
             switch (choice) {
                 case "add":
-                    
+                    System.out.println("\n Enter the table to add to ("+ TableNames +"):");
+                    String addTable = userInnext().toLowerCase().strip();
+
+                    System.out.println("How many fields does the record have? ");
+                    int numFields = userIn.nextInt();
+                    userIn.nextLine();
+
+                    String[] newRecord = new String[numFields];
+                    for(int i = 0; i < numFields; i++){
+                        System.out.println("Enter field " + i + ":");
+                        newRecord[i] = userIn.nextLine().strip();
+                    }
+
+                    System.out.println(add(addTable, newRecord());
                     break;
                 case "options":
                     printOptions();
