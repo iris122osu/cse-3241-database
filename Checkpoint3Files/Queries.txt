@@ -1,0 +1,87 @@
+/*
+3.a
+*/
+SELECT Model 
+FROM Equipment
+WHERE Year > 2001 AND Manufacturer = "DeWalt";
+
+/*
+3.b
+*/
+SELECT *
+FROM Equipment as E, Rentals as R
+WHERE R.UserID = 5001 AND R.EquipmentSerialNumber = E.SerialNumber;
+
+/*
+3.c
+*/
+SELECT D.SerialNumber, DS.WeightCapacity
+FROM Drones as D, DroneSpecifications as DS
+WHERE D.Manufacturer = DS.Manufacturer 
+AND D.Model = DS.Model
+AND D.Year = DS.Year
+AND D.SerialNumber IN (
+    SELECT D.SerialNumber
+    FROM Drones as D
+    WHERE D.WarehouseID = 101
+    GROUP BY D.Model, D.Manufacturer, D.Year
+    HAVING count(*) < 3
+)
+ORDER BY DS.WeightCapacity
+;
+
+/*
+3.d
+*/
+SELECT R.UserID, R.EquipmentSerialNumber
+FROM Rentals as R
+WHERE R.UserID IN (
+    SELECT UD.UserID
+    FROM UserDistance as UD
+    WHERE UD.Distance > 15
+    )
+AND R.DroneSerialNumber = 45004
+;
+
+/*
+3.e
+*/
+SELECT count(D.SerialNumber)
+FROM Drones as D, Users as U, Rentals as R
+WHERE R.ReturnStatus = 1
+AND R.UserID = U.UserID
+AND D.SerialNumber = R.DroneSerialNumber
+AND U.Address = "111 Oak St"
+;
+
+/*
+3.f
+*/
+SELECT max(count), ID
+FROM (
+    SELECT count(R.EquipmentSerialNumber) as count, R.UserID as ID
+    FROM Rentals as R
+    GROUP BY R.UserID
+);
+
+/*
+3.g
+*/
+SELECT EQ.Model, count(*) as Quantity, avg(ES.Weight) as AverageWeight, sum(PO.Value) as TotalValue
+FROM (Equipment as EQ JOIN EquipmentSpecifications as ES ON EQ.Manufacturer=ES.Manufacturer AND EQ.Model=ES.Model) 
+     JOIN 
+     (EquipmentPOs as EPO JOIN PurchaseOrders as PO ON EPO.OrderNumber=PO.OrderNumber) 
+     ON EPO.EquipmentSerialNumber=EQ.SerialNumber
+WHERE PO.EstimatedArrival > "1/1/2025"
+GROUP BY EQ.Model
+;
+
+/*
+3.h
+*/
+SELECT max(count), ID
+FROM (
+    SELECT count(R.EquipmentSerialNumber) as count, R.UserID as ID
+    FROM Rentals as R
+    GROUP BY R.UserID
+);
