@@ -162,4 +162,12 @@ CREATE TABLE EquipmentPOs
     FOREIGN KEY(OrderNumber) REFERENCES PurchaseOrders(OrderNumber),
     FOREIGN KEY(EquipmentSerialNumber) REFERENCES Equipment(SerialNumber) );
 
+CREATE TABLE UserDistance
+  ( UserID INT NOT NULL,
+    WarehouseID INT NOT NULL,
+    Distance INT NOT NULL,
+    PRIMARY KEY(UserID, WarehouseID),
+    FOREIGN KEY(UserID) REFERENCES Users(UserID),
+    FOREIGN KEY(WarehouseID) REFERENCES Warehouses(WarehouseID) );
+
 PRAGMA foreign_keys = ON;
