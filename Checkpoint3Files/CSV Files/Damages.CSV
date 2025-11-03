@@ -1,0 +1,40 @@
+8001,"Cracked plastic housing",2025-10-15,150,0,90001
+8002,"Engine seized, user ran without oil",2025-10-20,2800,0,90005
+8003,"Bent auger blade",2025-10-21,300,1,90039
+8004,"Frayed power cord, cut insulation",2025-10-22,80,0,90008
+8005,"Hydraulic fluid leak, damaged hose",2025-10-22,,1,90007
+8006,"Won't hold a charge, battery failure",2025-10-23,120,0,90003
+8007,"Broken safety guard",2025-10-24,95,0,90025
+8008,"Cracked glass on light tower",2025-10-25,210,1,90035
+8009,"Impact damage to main body",2025-10-25,600,0,90002
+8010,"Motor burnout, evidence of overload",2025-10-26,450,1,90018
+8011,"Snapped pull cord",2025-10-27,45,0,90006
+8012,"Wheel axle bent",2025-10-28,180,0,90032
+8013,"Water damage, left in rain",2025-10-29,,1,90004
+8014,"Broken rung on ladder",2025-10-30,75,0,90012
+8015,"Clogged nozzle, improper chemical use",2025-11-01,110,0,90014
+8016,"Tire puncture, unrepairable",2025-11-01,250,1,90029
+8017,"Failed to start, contaminated fuel",2025-09-05,200,0,90010
+8018,"Broken locking mechanism",2025-09-12,60,1,90013
+8019,"Blade chipped and dull",2025-09-15,130,0,90023
+8020,"Safety sensor bypassed and broken",2025-09-20,320,0,90026
+8021,"Cracked display panel",2025-09-21,190,0,90031
+8022,"Drive belt snapped",2025-09-22,140,1,90002
+8023,"Overheated, melted casing",2025-09-25,,0,90033
+8024,"Missing air filter, engine damage",2025-09-30,500,1,90036
+8025,"Frame alignment issue after drop",2025-10-01,650,0,90030
+8026,"Worn gear assembly, grinding noise",2025-10-02,320,0,90009
+8027,"Frayed wiring harness",2025-10-03,210,1,90020
+8028,"Cooling fan failure",2025-10-05,140,0,90034
+8029,"Minor cosmetic scratches",2025-10-07,,0,90038
+8030,"Faulty memory module",2025-10-10,280,0,90001
+8031,"Heater element broken",2025-10-11,160,1,90033
+8032,"Incorrect calibration, dropped",2025-10-12,100,0,90022
+8033,"Broken latch on access panel",2025-10-13,45,0,90016
+8034,"System crash on boot",2025-10-14,220,1,90019
+8035,"Rusted components from moisture",2025-10-15,700,0,90040
+8036,"Damaged heat sink",2025-10-16,115,0,90011
+8037,"Bluetooth connectivity failure",2025-10-17,95,1,90003
+8038,"Failed diagnostic test 42",2025-10-18,300,0,90028
+8039,"Optical sensor obscured, user painted",2025-10-19,50,0,90017
+8040,"Actuator arm stuck",2025-10-20,1300,1,90027

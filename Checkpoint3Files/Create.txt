@@ -76,7 +76,7 @@ CREATE TABLE Rentals
     DroneSerialNumber INT NOT NULL,
     PRIMARY KEY(RentalNumber),
     FOREIGN KEY(EquipmentSerialNumber) REFERENCES Equipment(SerialNumber),
-    FOREIGN KEY(UserID) REFERENCES Users(UserID) ,
+    FOREIGN KEY(UserID) REFERENCES Users(UserID),
     FOREIGN KEY(DroneSerialNumber) REFERENCES Drones(SerialNumber) );
 
 CREATE TABLE Equipment
