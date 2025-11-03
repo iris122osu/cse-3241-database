@@ -1,0 +1,17 @@
+.import Damages.CSV Damages
+.import DronePOs.CSV DronePOs
+.import Drones.CSV Drones
+.import DroneSpecifications.CSV DroneSpecifications
+.import EmployeePhone.CSV EmployeePhone
+.import Employees.CSV Employees
+.import Equipment.CSV Equipment
+.import EquipmentPOs.CSV EquipmentPOs
+.import EquipmentSpecifications.CSV EquipmentSpecifications
+.import PurchaseOrders.CSV PurchaseOrders
+.import Rentals.CSV Rentals
+.import Reviews.CSV Reviews
+.import UserPhone.CSV UserPhone
+.import UserRents.CSV UserRents
+.import Users.CSV Users
+.import WarehouseLocation.CSV WarehouseLocation
+.import Warehouses.CSV Warehouses
