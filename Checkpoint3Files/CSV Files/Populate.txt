@@ -15,3 +15,4 @@
 .import Users.CSV Users
 .import WarehouseLocation.CSV WarehouseLocation
 .import Warehouses.CSV Warehouses
+.import UserDistance.CSV UserDistance
