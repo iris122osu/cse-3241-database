@@ -1,0 +1,165 @@
+PRAGMA foreign_keys = OFF;
+
+CREATE TABLE Employees
+  ( EmployeeID INT NOT NULL,
+    FirstName VARCHAR(30) NOT NULL,
+    LastName VARCHAR(30) NOT NULL,
+    JobType VARCHAR(30),
+    Email VARCHAR(30) UNIQUE,
+    WarehouseID INT NOT NULL,
+    PRIMARY KEY(EmployeeID),
+    FOREIGN KEY(WarehouseID) REFERENCES Warehouses(WarehouseID) );
+
+CREATE TABLE EmployeePhone
+  ( EmployeeID INT NOT NULL,
+    Phone CHAR(10) NOT NULL,
+    PRIMARY KEY(EmployeeID, Phone),
+    FOREIGN KEY(EmployeeID) REFERENCES Employees(EmployeeID) );
+
+CREATE TABLE Warehouses
+  ( WarehouseID INT NOT NULL,
+    Phone CHAR(10) NOT NULL,
+    ManagerFirstName VARCHAR(30) NOT NULL,
+    ManagerLastName VARCHAR(30) NOT NULL,
+    DroneCapacity INT,
+    EquipmentCapacity INT,
+    Address VARCHAR(30),
+    PRIMARY KEY(WarehouseID) );
+
+CREATE TABLE WarehouseLocation
+  ( Address VARCHAR(30) NOT NULL,
+    City VARCHAR(30) NOT NULL,
+    PRIMARY KEY(Address),
+    FOREIGN KEY(Address) REFERENCES Warehouses(Address) );
+
+CREATE TABLE Damages
+  ( ReportNumber INT NOT NULL,
+    Description VARCHAR(100) NOT NULL,
+    DateOfIncident DATE NOT NULL,
+    EstimatedCost INT,
+    Status BOOLEAN,
+    EquipmentSerialNumber INT NOT NULL,
+    PRIMARY KEY(ReportNumber),
+    FOREIGN KEY(EquipmentSerialNumber) REFERENCES Equipment(SerialNumber) );
+
+CREATE TABLE Drones
+  ( SerialNumber INT NOT NULL,
+    Manufacturer VARCHAR(30) NOT NULL,
+    Model VARCHAR(30) NOT NULL,
+    Year DATE NOT NULL,
+    Status BOOLEAN,
+    Warranty DATE,
+    WarehouseID INT NOT NULL,
+    OrderNumber INT NOT NULL,
+    PRIMARY KEY(SerialNumber),
+    FOREIGN KEY(Manufacturer, Model, Year) REFERENCES DroneSpecifications(Manufacturer, Model, Year),
+    FOREIGN KEY(WarehouseID) REFERENCES Warehouses(WarehouseID),
+    FOREIGN KEY(OrderNumber) REFERENCES PurchaseOrders(OrderNumber) );
+
+CREATE TABLE DroneSpecifications
+  ( Manufacturer VARCHAR(30) NOT NULL,
+    Model VARCHAR(30) NOT NULL,
+    Year DATE NOT NULL,
+    Autonomy BOOLEAN,
+    WeightCapacity INT,
+    DistanceCapacity INT,
+    MaxSpeed INT,
+    PRIMARY KEY(Manufacturer, Model, Year) );
+
+CREATE TABLE Rentals
+  ( RentalNumber INT NOT NULL,
+    ReturnStatus BOOLEAN NOT NULL,
+    CheckOut DATE NOT NULL,
+    Due DATE NOT NULL,
+    EquipmentSerialNumber INT NOT NULL,
+    UserID INT NOT NULL,
+    DroneSerialNumber INT NOT NULL,
+    PRIMARY KEY(RentalNumber),
+    FOREIGN KEY(EquipmentSerialNumber) REFERENCES Equipment(SerialNumber),
+    FOREIGN KEY(UserID) REFERENCES Users(UserID) ,
+    FOREIGN KEY(DroneSerialNumber) REFERENCES Drones(SerialNumber) );
+
+CREATE TABLE Equipment
+  ( SerialNumber INT NOT NULL,
+    Manufacturer VARCHAR(30) NOT NULL,
+    Model VARCHAR(30) NOT NULL,
+    Year DATE NOT NULL,
+    Warranty DATE,
+    WarehouseID INT NOT NULL,
+    OrderNumber INT NOT NULL,
+    PRIMARY KEY(SerialNumber),
+    FOREIGN KEY(Manufacturer, Model, Year) REFERENCES EquipmentSpecifications(Manufacturer, Model, Year),
+    FOREIGN KEY(WarehouseID) REFERENCES Warehouses(WarehouseID),
+    FOREIGN KEY(OrderNumber) REFERENCES PurchaseOrders(OrderNumber) );
+
+CREATE TABLE EquipmentSpecifications
+  ( Manufacturer VARCHAR(30) NOT NULL,
+    Model VARCHAR(30) NOT NULL,
+    Year DATE NOT NULL,
+    Description VARCHAR(100),
+    Type VARCHAR(30),
+    ItemFee INT,
+    PerDayCost INT,
+    Dimension INT,
+    Weight INT,
+    PRIMARY KEY(Manufacturer, Model, Year) );
+
+CREATE TABLE PurchaseOrders
+  ( OrderNumber INT NOT NULL,
+    EstimatedArrival DATE NOT NULL,
+    ActualArrival DATE NOT NULL,
+    Status BOOLEAN,
+    ElementType VARCHAR(30),
+    Value INT,
+    Qty INT,
+    WarehouseID INT NOT NULL,
+    PRIMARY KEY(OrderNumber),
+    FOREIGN KEY(WarehouseID) REFERENCES Warehouses(WarehouseID) );
+
+CREATE TABLE UserRents
+  ( EquipmentSerialNumber INT NOT NULL,
+    UserID INT NOT NULL,
+    PRIMARY KEY(EquipmentSerialNumber, UserID),
+    FOREIGN KEY(EquipmentSerialNumber) REFERENCES Equipment(SerialNumber),
+    FOREIGN KEY(UserID) REFERENCES Users(UserID) );
+
+CREATE TABLE Users
+  ( UserID INT NOT NULL,
+    FirstName VARCHAR(30) NOT NULL,
+    LastName VARCHAR(30) NOT NULL,
+    StartDate DATE,
+    Address VARCHAR(30),
+    Email VARCHAR(30) UNIQUE,
+    PRIMARY KEY(UserID) );
+
+CREATE TABLE UserPhone
+  ( UserID INT NOT NULL,
+    Phone CHAR(10) NOT NULL,
+    PRIMARY KEY(UserID, Phone),
+    FOREIGN KEY(UserID) REFERENCES Users(UserID) );
+
+CREATE TABLE Reviews
+  ( ReviewNumber INT NOT NULL,
+    Comment VARCHAR(100),
+    Rating INT,
+    UserID INT NOT NULL,
+    EquipmentSerialNumber INT NOT NULL,
+    PRIMARY KEY(ReviewNumber),
+    FOREIGN KEY(EquipmentSerialNumber) REFERENCES Equipment(SerialNumber),
+    FOREIGN KEY(UserID) REFERENCES Users(UserID) );
+
+CREATE TABLE DronePOs
+  ( OrderNumber INT NOT NULL,
+    DroneSerialNumber INT NOT NULL,
+    PRIMARY KEY(OrderNumber, DroneSerialNumber),
+    FOREIGN KEY(OrderNumber) REFERENCES PurchaseOrders(OrderNumber),
+    FOREIGN KEY(DroneSerialNumber) REFERENCES Drones(SerialNumber) );
+
+CREATE TABLE EquipmentPOs
+  ( OrderNumber INT NOT NULL,
+    EquipmentSerialNumber INT NOT NULL,
+    PRIMARY KEY(OrderNumber, EquipmentSerialNumber),
+    FOREIGN KEY(OrderNumber) REFERENCES PurchaseOrders(OrderNumber),
+    FOREIGN KEY(EquipmentSerialNumber) REFERENCES Equipment(SerialNumber) );
+
+PRAGMA foreign_keys = ON;
