@@ -1,40 +1,40 @@
-"DeWalt","Hammer Drill DCD996","2023-01-01","20V MAX XR Brushless 1/2 in. Hammer Drill","Power Tool",20,35,8,5
-"CAT","Skid Steer 236D3","2022-01-01","Compact Skid Steer Loader, 67 hp","Heavy Equipment",150,300,140,6500
-"Milwaukee","Impact Wrench 2767","2024-01-01","M18 FUEL High Torque 1/2 in. Impact Wrench","Power Tool",25,40,9,7
-"Bosch","Rotary Hammer 11255VSR","2023-01-01","1 in. SDS-plus Bulldog Xtreme Rotary Hammer","Power Tool",30,50,17,7
-"Honda","Generator EU3000iS","2022-01-01","3000-Watt Super Quiet Inverter Generator","Generator",50,80,26,131
-"Ryobi","Pressure Washer 3000","2024-01-01","3000-PSI 2.3-GPM Gas Pressure Washer","Cleaning",40,65,35,62
-"CAT","Mini Excavator 301.7","2023-01-01","1.7 Ton Mini Hydraulic Excavator","Heavy Equipment",180,350,150,3800
-"DeWalt","Compound Miter Saw","2022-01-01","12 in. Double Bevel Sliding Compound Miter Saw","Power Tool",35,55,32,56
-"Milwaukee","Sawzall 2720","2023-01-01","M18 FUEL Sawzall Reciprocating Saw","Power Tool",20,30,19,8
-"Honda","Generator EU7000iS","2023-01-01","7000-Watt Super Quiet Inverter Generator","Generator",80,120,34,261
-"Bosch","Jackhammer BH2760VC","2022-01-01","Brute Breaker Hammer with Cart","Demolition",60,90,30,63
-"Werner","Extension Ladder D6224","2022-01-01","24 ft. Fiberglass Extension Ladder","Ladder",15,25,288,50
-"Werner","Stepladder T6210","2023-01-01","10 ft. Fiberglass Stepladder","Ladder",10,20,120,30
-"Graco","Paint Sprayer ProX19","2023-01-01","ProX19 Cart Airless Paint Sprayer","Painting",50,75,40,30
-"Billy Goat","Lawn Aerator PL1800","2022-01-01","18 in. Plug Aerator","Lawn Care",40,70,58,240
-"Billy Goat","Sod Cutter SC180H","2023-01-01","18 in. Hydro Sod Cutter","Lawn Care",60,90,55,360
-"Bluebird","Tiller T530","2022-01-01","Rear-Tine Tiller","Gardening",30,50,60,150
-"Clarke","Floor Sander OBS-18","2022-01-01","Orbital Floor Sander","Flooring",40,60,20,125
-"Clarke","Floor Edger Super 7R","2023-01-01","7 in. Floor Edger","Flooring",30,45,18,35
-"Husqvarna","Concrete Saw K770","2024-01-01","14 in. Gas Cut-Off Saw","Concrete",50,80,30,22
-"Makita","Demo Hammer HM1307CB","2023-01-01","35 lb. Demolition Hammer","Demolition",45,70,28,38
-"Rigid","Tile Saw R4092","2023-01-01","10 in. Wet Tile Saw with Stand","Tiling",40,60,40,80
-"Rigid","Pipe Threader 700","2023-01-01","Hand-Held Power Drive Pipe Threader","Plumbing",40,65,30,25
-"Kobalt","Tile Saw KT1015","2022-01-01","10-in Wet Tile Saw with Stand","Tiling",35,55,38,75
-"Stihl","Chainsaw MS 271","2023-01-01","Farm Boss 20 in. Chainsaw","Lawn Care",30,50,35,12
-"DeWalt","Table Saw DWE7491RS","2023-01-01","10 in. Table Saw with Rolling Stand","Power Tool",40,60,40,90
-"Toro","Stump Grinder STX-26","2022-01-01","Tracked Stump Grinder","Lawn Care",120,250,78,1300
-"Vermeer","Chipper BC700XL","2022-01-01","7-inch Brush Chipper","Lawn Care",140,280,100,1900
-"Ditch Witch","Trencher C30X","2023-01-01","30-inch Walk-Behind Trencher","Excavation",130,260,85,1100
-"Bil-Jax","Scissor Lift 3632T","2022-01-01","36-ft Towable Scissor Lift","Lift",200,400,150,4500
-"Hilti","Core Drill DD-150","2023-01-01","Diamond Coring Drill Rig","Concrete",70,110,40,50
-"Wacker Neuson","Plate Compactor WP1550","2023-01-01","Vibratory Plate Compactor","Compaction",30,50,40,190
-"Mi-T-M","Heat Cannon MH-0150","2022-01-01","150,000 BTU Kerosene Forced Air Heater","Climate",25,45,40,60
-"Dri-Eaz","Dehumidifier LGR 7000","2023-01-01","Commercial Dehumidifier","Climate",50,80,40,135
-"Generac","Light Tower MLT6SM","2022-01-01","Mobile Light Tower","Generator",100,180,120,1500
-"Husqvarna","Leaf Blower 580BTS","2024-01-01","Backpack Leaf Blower, Gas","Lawn Care",25,45,20,26
-"Champion","Log Splitter 25-Ton","2023-01-01","25-Ton Gas Log Splitter","Lawn Care",40,70,85,550
-"Karcher","Floor Scrubber B 40","2023-01-01","Walk-Behind Floor Scrubber","Cleaning",80,130,50,210
-"Barreto","Tiller 1320H","2022-01-01","20-inch Hydraulic Tiller","Gardening",45,75,65,340
-"Honda","Water Pump WT40X","2023-01-01","4-inch Trash Water Pump","Plumbing",50,85,50,170
+DeWalt,Hammer Drill DCD996,1/1/2023,20V MAX XR Brushless 1/2 in. Hammer Drill,Power Tool,20,35,8,5
+CAT,Skid Steer 236D3,1/1/2022,"Compact Skid Steer Loader, 67 hp",Heavy Equipment,150,300,140,6500
+Milwaukee,Impact Wrench 2767,1/1/2024,M18 FUEL High Torque 1/2 in. Impact Wrench,Power Tool,25,40,9,7
+Bosch,Rotary Hammer 11255VSR,1/1/2023,1 in. SDS-plus Bulldog Xtreme Rotary Hammer,Power Tool,30,50,17,7
+Honda,Generator EU3000iS,1/1/2022,3000-Watt Super Quiet Inverter Generator,Generator,50,80,26,131
+Ryobi,Pressure Washer 3000,1/1/2024,3000-PSI 2.3-GPM Gas Pressure Washer,Cleaning,40,65,35,62
+CAT,Mini Excavator 301.7,1/1/2023,1.7 Ton Mini Hydraulic Excavator,Heavy Equipment,180,350,150,3800
+DeWalt,Compound Miter Saw,1/1/2022,12 in. Double Bevel Sliding Compound Miter Saw,Power Tool,35,55,32,56
+Milwaukee,Sawzall 2720,1/1/2023,M18 FUEL Sawzall Reciprocating Saw,Power Tool,20,30,19,8
+Honda,Generator EU7000iS,1/1/2023,7000-Watt Super Quiet Inverter Generator,Generator,80,120,34,261
+Bosch,Jackhammer BH2760VC,1/1/2022,Brute Breaker Hammer with Cart,Demolition,60,90,30,63
+Werner,Extension Ladder D6224,1/1/2022,24 ft. Fiberglass Extension Ladder,Ladder,15,25,288,50
+Werner,Stepladder T6210,1/1/2023,10 ft. Fiberglass Stepladder,Ladder,10,20,120,30
+Graco,Paint Sprayer ProX19,1/1/2023,ProX19 Cart Airless Paint Sprayer,Painting,50,75,40,30
+Billy Goat,Lawn Aerator PL1800,1/1/2022,18 in. Plug Aerator,Lawn Care,40,70,58,240
+Billy Goat,Sod Cutter SC180H,1/1/2023,18 in. Hydro Sod Cutter,Lawn Care,60,90,55,360
+Bluebird,Tiller T530,1/1/2022,Rear-Tine Tiller,Gardening,30,50,60,150
+Clarke,Floor Sander OBS-18,1/1/2022,Orbital Floor Sander,Flooring,40,60,20,125
+Clarke,Floor Edger Super 7R,1/1/2023,7 in. Floor Edger,Flooring,30,45,18,35
+Husqvarna,Concrete Saw K770,1/1/2024,14 in. Gas Cut-Off Saw,Concrete,50,80,30,22
+Makita,Demo Hammer HM1307CB,1/1/2023,35 lb. Demolition Hammer,Demolition,45,70,28,38
+Rigid,Tile Saw R4092,1/1/2023,10 in. Wet Tile Saw with Stand,Tiling,40,60,40,80
+Rigid,Pipe Threader 700,1/1/2023,Hand-Held Power Drive Pipe Threader,Plumbing,40,65,30,25
+Kobalt,Tile Saw KT1015,1/1/2022,10-in Wet Tile Saw with Stand,Tiling,35,55,38,75
+Stihl,Chainsaw MS 271,1/1/2023,Farm Boss 20 in. Chainsaw,Lawn Care,30,50,35,12
+DeWalt,Table Saw DWE7491RS,1/1/2023,10 in. Table Saw with Rolling Stand,Power Tool,40,60,40,90
+Toro,Stump Grinder STX-26,1/1/2022,Tracked Stump Grinder,Lawn Care,120,250,78,1300
+Vermeer,Chipper BC700XL,1/1/2022,7-inch Brush Chipper,Lawn Care,140,280,100,1900
+Ditch Witch,Trencher C30X,1/1/2023,30-inch Walk-Behind Trencher,Excavation,130,260,85,1100
+Bil-Jax,Scissor Lift 3632T,1/1/2022,36-ft Towable Scissor Lift,Lift,200,400,150,4500
+Hilti,Core Drill DD-150,1/1/2023,Diamond Coring Drill Rig,Concrete,70,110,40,50
+Wacker Neuson,Plate Compactor WP1550,1/1/2023,Vibratory Plate Compactor,Compaction,30,50,40,190
+Mi-T-M,Heat Cannon MH-0150,1/1/2022,"150,000 BTU Kerosene Forced Air Heater",Climate,25,45,40,60
+Dri-Eaz,Dehumidifier LGR 7000,1/1/2023,Commercial Dehumidifier,Climate,50,80,40,135
+Generac,Light Tower MLT6SM,1/1/2022,Mobile Light Tower,Generator,100,180,120,1500
+Husqvarna,Leaf Blower 580BTS,1/1/2024,"Backpack Leaf Blower, Gas",Lawn Care,25,45,20,26
+Champion,Log Splitter 25-Ton,1/1/2023,25-Ton Gas Log Splitter,Lawn Care,40,70,85,550
+Karcher,Floor Scrubber B 40,1/1/2023,Walk-Behind Floor Scrubber,Cleaning,80,130,50,210
+Barreto,Tiller 1320H,1/1/2022,20-inch Hydraulic Tiller,Gardening,45,75,65,340
+Honda,Water Pump WT40X,1/1/2023,4-inch Trash Water Pump,Plumbing,50,85,50,170
