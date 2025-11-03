@@ -1,0 +1,22 @@
+// 4.a
+
+SELECT w.WarehouseID, e.JobType, COUNT(e.EmployeeID) AS EmployeeCount
+FROM Employees AS e JOIN Warehouses as w ON e.WarehouseID = w.WarehouseID
+GROUP BY w.WarehouseID, e.JobType
+ORDER BY w.WarehouseID, e.JobType;
+
+// 4.b
+
+SELECT w.WarehouseID, AVG(r.Rating) as Avgrating
+FROM Equipment as e JOIN Reviews as r ON e.SerialNumber = r.EquipmentSerialNumber 
+JOIN Warehouses as w ON e.WarehouseID = w.WarehouseID
+GROUP BY w.WarehouseID
+ORDER BY Avgrating DESC;
+
+//4.c
+
+SELECT e.SerialNumber, e.Manufacturer, e.Model, e.Year, COUNT(d.ReportNumber) AS DamageCount, SUM(d.EstimatedCost) AS TotalCost
+FROM Equpment AS e JOIN Damages AS d ON e.SerialNumber = d.EquipmentSerialNumber
+GROUP BY e.SerialNumber, e.Manufacturer, e.Model, e.Year
+HAVING SUM(d.EstimatedCost) > 500
+ORDER BY TotalCost DESC;
