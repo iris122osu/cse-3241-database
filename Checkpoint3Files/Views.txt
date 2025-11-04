@@ -1,0 +1,28 @@
+/* 
+View 1: WarehouseRentalActivity 
+*/
+
+CREATE VIEW WarehouseRentalActivity AS
+SELECT 
+    w.WarehouseID,
+    w.ManagerFirstName || ' ' || w.ManagerLastName AS ManagerName,
+    COUNT(r.RentalNumber) AS TotalRentals
+FROM Warehouses AS w
+JOIN Drones AS d ON w.WarehouseID = d.WarehouseID
+JOIN Rentals AS r ON d.SerialNumber = r.DroneSerialNumber
+GROUP BY w.WarehouseID, ManagerName;
+
+/* 
+View 2: DroneUsageSummary
+*/
+
+CREATE VIEW DroneUsageSummary AS
+SELECT 
+    d.SerialNumber AS DroneSerialNumber,
+    d.Model,
+    COUNT(r.RentalNumber) AS TotalDeliveries,
+    COUNT(DISTINCT r.UserID) AS UniqueUsersServed
+FROM Drones AS d
+JOIN Rentals AS r ON d.SerialNumber = r.DroneSerialNumber
+GROUP BY d.SerialNumber, d.Model
+ORDER BY TotalDeliveries DESC;
