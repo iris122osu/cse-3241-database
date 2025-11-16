@@ -1,6 +1,13 @@
+package databaseapp;
+
 import java.io.File;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Scanner;
-import database.Database;
+import databaseapp.database.*;
+import databaseapp.utility.*;
 import java.util.ArrayList;
 
 
@@ -12,6 +19,33 @@ public final class DatabaseApp {
     private static final String TableNames = "Employees, Warehouses";
 
     private DatabaseApp() {
+    }
+
+	
+    /**
+     * Connects to the database if it exists, creates it if it does not, and returns the connection object.
+     * 
+     * @param databaseFileName the database file name
+     * @return a connection object to the designated database
+     */
+    public static Connection initializeDB() {
+        String url = "jdbc:sqlite:Checkpoint3Files/CSE-3241-DB.db";
+        Connection conn = null; 
+        try {
+            conn = DriverManager.getConnection(url);
+            if (conn != null) {
+            	// Provides some positive assurance the connection and/or creation was successful.
+                DatabaseMetaData meta = conn.getMetaData();
+                System.out.println("The connection to the database was successful.");
+            } else {
+            	// Provides some feedback in case the connection failed but did not throw an exception.
+            	System.out.println("Null Connection");
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            System.out.println("There was a problem connecting to the database.");
+        }
+        return conn;
     }
 
     private static void printOptions () {
@@ -88,58 +122,40 @@ public final class DatabaseApp {
         return out;
     }
 
-    private static String add(String table, String[] newRecord){
-        ArrayList<String[]> data = database.DataMap.get(table);
-
-        if(data == null) {
-            return "Error: table not found";
-        }
-
-        for (String[] record : data) {
-            if(record[0].equalsIgnoreCase(newRecord[0])){
-                return "record already exists";
-            }
-        }
-
-        data.add(newRecord);
-        return "Record Added!";
+    private static void add(Connection conn, Scanner userIn) {
+        {
+                    String addTable = "";
+                    do {
+                        System.out.println("\nEnter the table to add to ("+ TableNames +"):");
+                        addTable = Database.getTable(Utility.getStandardInput(userIn)) ;
+                    } while  (addTable.isBlank());
+                    ArrayList<String> columns = SQL.getColumns(conn, addTable);
+                    String[] newRecord = new String[columns.size()];
+                    for(int i = 0; i < columns.size(); i++){
+                        System.out.println("Enter " + columns.get(i) + ":");
+                        newRecord[i] = Utility.getStandardInput(userIn);
+                    }
+                    System.out.println(SQL.add(conn, addTable, newRecord));
+                }
     }
+
 
     public static void main(String[] args) {
 
         Scanner userIn = new Scanner(System.in);
 
-        // get data from database file
-        database = new Database();
-        database.ParseFromFile(new File("src\\main\\database\\data.csv"));
-        System.out.println("Data Loaded!");
-        printOptions();
+        Connection conn = initializeDB();
         String choice = "";
 
-        while (!choice.equals("exit")) {
+        do {
+            
+            printOptions(); 
             choice = userIn.next().toLowerCase().strip();
 
             switch (choice) {
-                case "add":
-                    System.out.println("\n Enter the table to add to ("+ TableNames +"):");
-                    String addTable = userIn.next().toLowerCase().strip();
-
-                    System.out.println("How many fields does the record have? ");
-                    int numFields = userIn.nextInt();
-                    userIn.nextLine();
-
-                    String[] newRecord = new String[numFields];
-                    for(int i = 0; i < numFields; i++){
-                        System.out.println("Enter field " + i + ":");
-                        newRecord[i] = userIn.nextLine().strip();
-                    }
-
-                    System.out.println(add(addTable, newRecord));
-                    break;
-                case "options":
-                    printOptions();
-                    break;
-                case "edit":
+                case "add" -> add(conn, userIn);
+                case "options" -> printOptions();
+                case "edit" -> {
                     System.out.println("\nEnter the table to search ("+TableNames+"):");
                     String editName = userIn.next().toLowerCase().strip();
                     System.out.println("Enter the id of the record to edit (beginning with 0):");
@@ -154,40 +170,38 @@ public final class DatabaseApp {
                     int editIndex = userIn.nextInt(); 
                     System.out.println("Enter the new value ("+TableNames+"):");
                     String editReplacement = userIn.next().toLowerCase().strip();
-
+                    
                     System.out.println(edit(editName, editID, editIndex, editReplacement));
-                    
-                    
-                    break;
-                case "delete":
+                }
+                case "delete" -> {
                     System.out.println("\nEnter the table to search ("+TableNames+"):");
                     String deleteName = userIn.next().toLowerCase().strip();
                     System.out.println("Enter the id to delete:");
                     String deleteID = userIn.next().toLowerCase().strip(); 
                     System.out.println(delete(deleteName, deleteID));
-                    break;
-                case "search":
+                }
+                case "search" -> {
                     System.out.println("\nEnter the table to search ("+TableNames+"):");
                     String searchName = userIn.next().toLowerCase().strip();
                     System.out.println("Enter the id to search:");
                     String searchID = userIn.next().toLowerCase().strip(); 
                     System.out.println(search(searchName, searchID));
-                    break;
-                case "rent":
+                }
+                case "rent" -> {
                     System.out.println("\nEnter Equipment ID: ");
                     String rentEID = userIn.next().toLowerCase().strip(); 
                     System.out.println("\nEnter User ID: ");
                     String rentUID = userIn.next().toLowerCase().strip();
                     System.out.println("\nRented!");
-                    break;
-                case "return":
+                }
+                case "return" -> {
                     System.out.println("\nEnter Equipment ID: ");
                     String returnEID = userIn.next().toLowerCase().strip(); 
                     System.out.println("\nEnter User ID: ");
                     String returnUID = userIn.next().toLowerCase().strip();
                     System.out.println("\nReturned!");
-                    break;
-                case "deliver":
+                }
+                case "deliver" -> {
                     System.out.println("\nEnter Drone ID: ");
                     String deliverDID = userIn.next().toLowerCase().strip();
                     System.out.println("\nEnter Equipment ID: ");
@@ -195,8 +209,8 @@ public final class DatabaseApp {
                     System.out.println("\nEnter User ID: ");
                     String deliverUID = userIn.next().toLowerCase().strip();
                     System.out.println("\nDelivered!");
-                    break;
-                case "pickup":
+                }
+                case "pickup" -> {
                     System.out.println("\nEnter Drone ID: ");
                     String pickupDID = userIn.next().toLowerCase().strip();
                     System.out.println("\nEnter Equipment ID: ");
@@ -204,12 +218,12 @@ public final class DatabaseApp {
                     System.out.println("\nEnter User ID: ");
                     String pickupUID = userIn.next().toLowerCase().strip();
                     System.out.println("\nScheduled for pickup!");
-                    break;
-                default:
-                    break;
+                }
+                default -> {
+                }
             }
 
-        }
+        } while (!choice.equals("exit"));
         
 
 
