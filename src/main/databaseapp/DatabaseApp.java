@@ -84,9 +84,10 @@ public final class DatabaseApp {
         System.out.println("");
         System.out.println("Options, case insensitive:");
         System.out.println("Add: add a record");
-        System.out.println("Edit: Edit a record");
-        System.out.println("Delete: Delete a record");
+        System.out.println("Edit: edit a record");
+        System.out.println("Delete: delete a record");
         System.out.println("Search: search for a record");
+        System.out.println("Reports: get a report");
         System.out.println("Rent: register a rental");
         System.out.println("Return: register a return");
         System.out.println("Deliver: schedule a delivery");
@@ -113,25 +114,6 @@ public final class DatabaseApp {
         return SQL.search(conn, addTable, columns, values);
     }
 
-    private static String delete(String table, String id) {
-        ArrayList<String[]> data = database.DataMap.get(table);
-        String out = "";
-        int i = 0;
-        while (out.isEmpty() && i < data.size()) {
-            if (data.get(i)[0].equals(id)) {
-                data.remove(i);
-                out = "Deleted!";
-            }
-            i++;
-        }
-
-        if (out.isEmpty()) {
-            out = "Record for id: "+ id + " not found.";
-        }
-
-        return out;
-    }
-
     private static String edit(Connection conn, Scanner userIn) {
 
         
@@ -155,6 +137,20 @@ public final class DatabaseApp {
             newRecord[i] = Utility.getStandardInput(userIn);
         }
         System.out.println(SQL.add(conn, addTable, newRecord));
+    }
+
+    private static void delete(Connection conn, Scanner userIn) {
+        String deleteTable = getTableFromUser(userIn);
+        if (deleteTable.isBlank()) {
+            return;
+        }
+        String[] columns = SQL.getPrimaryKeys(conn, deleteTable);
+        String[] values = new String[columns.length];
+        for(int i = 0; i < columns.length; i++){
+            System.out.println("Enter " + columns[i] + ":");
+            values[i] = Utility.getStandardInput(userIn);
+        }
+        System.out.println(SQL.delete(conn, deleteTable, columns, values));
     }
 
     private static String getTableFromUser(Scanner userIn) {
@@ -188,13 +184,7 @@ public final class DatabaseApp {
                 case "add" -> add(conn, userIn);
                 case "options" -> printOptions();
                 case "edit" -> edit(conn, userIn);
-                case "delete" -> {
-                    System.out.println("\nEnter the table to search ("+TableNames+"):");
-                    String deleteName = userIn.next().toLowerCase().strip();
-                    System.out.println("Enter the id to delete:");
-                    String deleteID = userIn.next().toLowerCase().strip(); 
-                    System.out.println(delete(deleteName, deleteID));
-                }
+                case "delete" -> delete(conn, userIn);
                 case "search" -> {
                     ResultSet rs = search(conn, userIn);
                     printResultSet(rs);
@@ -231,6 +221,7 @@ public final class DatabaseApp {
                     String pickupUID = userIn.next().toLowerCase().strip();
                     System.out.println("\nScheduled for pickup!");
                 }
+                case "reports" -> {}
                 default -> {
                 }
             }

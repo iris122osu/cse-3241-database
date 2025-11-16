@@ -75,6 +75,33 @@ public class SQL {
         return out;
     }
 
+    public static String delete(Connection conn, String table, String[] keys, String[] values){
+        String out;
+        try {
+            String sql = "DELETE FROM "+ table + " WHERE ";
+            int i = 0;
+            for (; i < keys.length - 1; i++) {
+                sql = sql + keys[i] + "=? AND ";
+            }
+            sql = sql + keys[i] + "=?;";
+
+            ps = conn.prepareStatement(sql);
+            for (i = 0; i < keys.length; i++) {
+                ps.setString(i + 1, values[i]);
+            }
+            int result = ps.executeUpdate();
+            if (result > 0) {
+                out = "Record deleted!";
+            } else {
+                out = "Record not found!";
+            }
+        } catch (SQLException e) {
+            out = e.getMessage();
+        }
+
+        return out;
+    }
+
     public static ResultSet search(Connection conn, String table, String[] keys, String[] values){
         ResultSet out = null;
         try {
