@@ -11,7 +11,7 @@ public class Database {
 
     public HashMap<String, ArrayList<String[]>> DataMap;
 
-    public static String[] TableNames = {"Damages","DronePOs","Drones",
+    public static final String[] TableNames = {"Damages","DronePOs","Drones",
         "DroneSpecifications","EmployeePhone","Employees","Equipment",
         "EquipmentPOs","EquipmentSpecifications","PurchaseOrders",
         "Rentals","Reviews","UserDistance","UserPhone","UserRents",

@@ -16,9 +16,17 @@ public final class DatabaseApp {
     private static Database database; 
 
     // so user knows their options when choosing a table to search, delete, etc.
-    private static final String TableNames = "Employees, Warehouses";
+    private static String TableNames = "";
 
     private DatabaseApp() {
+    }
+
+    private static void getTableNames() {
+        for (int i = 0; i < Database.TableNames.length; i++) {
+            TableNames = TableNames + ", " + Database.TableNames[i];
+        }
+
+        TableNames = TableNames.substring(2, TableNames.length() - 1); 
     }
 
 	
@@ -123,24 +131,27 @@ public final class DatabaseApp {
     }
 
     private static void add(Connection conn, Scanner userIn) {
-        {
-                    String addTable = "";
-                    do {
-                        System.out.println("\nEnter the table to add to ("+ TableNames +"):");
-                        addTable = Database.getTable(Utility.getStandardInput(userIn)) ;
-                    } while  (addTable.isBlank());
-                    ArrayList<String> columns = SQL.getColumns(conn, addTable);
-                    String[] newRecord = new String[columns.size()];
-                    for(int i = 0; i < columns.size(); i++){
-                        System.out.println("Enter " + columns.get(i) + ":");
-                        newRecord[i] = Utility.getStandardInput(userIn);
-                    }
-                    System.out.println(SQL.add(conn, addTable, newRecord));
-                }
+        String addTable = "";
+        do {
+            System.out.println("\nEnter the table to add to or exit ("+ TableNames +"):");
+            String in = Utility.getStandardInput(userIn);
+            if (in.toLowerCase().equals("exit")){
+                return;
+            }
+            addTable = Database.getTable(in) ;
+        } while  (addTable.isBlank());
+        ArrayList<String> columns = SQL.getColumns(conn, addTable);
+        String[] newRecord = new String[columns.size()];
+        for(int i = 0; i < columns.size(); i++){
+            System.out.println("Enter " + columns.get(i) + ":");
+            newRecord[i] = Utility.getStandardInput(userIn);
+        }
+        System.out.println(SQL.add(conn, addTable, newRecord));
     }
 
 
     public static void main(String[] args) {
+        getTableNames();
 
         Scanner userIn = new Scanner(System.in);
 
