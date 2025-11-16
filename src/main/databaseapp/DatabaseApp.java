@@ -1,6 +1,5 @@
 package databaseapp;
 
-import java.io.File;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
@@ -15,8 +14,6 @@ import java.util.ArrayList;
 
 public final class DatabaseApp {
     
-    private static Database database; 
-
     // so user knows their options when choosing a table to search, delete, etc.
     private static String TableNames = "";
 
@@ -24,8 +21,8 @@ public final class DatabaseApp {
     }
 
     private static void getTableNames() {
-        for (int i = 0; i < Database.TableNames.length; i++) {
-            TableNames = TableNames + ", " + Database.TableNames[i];
+        for (String TableName : Database.TableNames) {
+            TableNames = TableNames + ", " + TableName;
         }
 
         TableNames = TableNames.substring(2, TableNames.length() - 1); 
@@ -67,7 +64,6 @@ public final class DatabaseApp {
             conn = DriverManager.getConnection(url);
             if (conn != null) {
             	// Provides some positive assurance the connection and/or creation was successful.
-                DatabaseMetaData meta = conn.getMetaData();
                 System.out.println("The connection to the database was successful.");
             } else {
             	// Provides some feedback in case the connection failed but did not throw an exception.
@@ -87,12 +83,24 @@ public final class DatabaseApp {
         System.out.println("Edit: edit a record");
         System.out.println("Delete: delete a record");
         System.out.println("Search: search for a record");
-        System.out.println("Reports: get a report");
+        System.out.println("Report: retrive a report");
         System.out.println("Rent: register a rental");
         System.out.println("Return: register a return");
         System.out.println("Deliver: schedule a delivery");
         System.out.println("Pickup: schedule a pickup");
         System.out.println("Options: display this list again");
+        System.out.println("Exit: quit the program");
+    }
+
+    private static void printReports () {
+        System.out.println("");
+        System.out.println("Reports, case insensitive:");
+        System.out.println("Renting Checkouts: find the total number of equipment items rented by a single member");
+        System.out.println("Popular Item: find the most popular item in the database");
+        System.out.println("Popular Manufacturer: Find the most frequent equipment manufacturer");
+        System.out.println("Popular Drone: Find the most used drone");
+        System.out.println("Items checked out: Find the member who has rented out the most items and the total number of items they have rented out");
+        System.out.println("Equipment: Get the name of equipment by type");
         System.out.println("Exit: quit the program");
     }
 
@@ -114,15 +122,14 @@ public final class DatabaseApp {
         return SQL.search(conn, addTable, columns, values);
     }
 
-    private static String edit(Connection conn, Scanner userIn) {
-
+    private static void edit(Connection conn, Scanner userIn) {
+        String editTable = getTableFromUser(userIn);
+        if (editTable.isBlank()) {
+            return;
+        }
         
-        System.out.println("\nEnter the table to search ("+TableNames+"):");
-        String editName = userIn.next().toLowerCase().strip();
-        System.out.println("Enter the id of the record to edit (beginning with 0):");
-        String editID = userIn.next().toLowerCase().strip(); 
 
-        return "";
+        return;
     }
 
     private static void add(Connection conn, Scanner userIn) {
@@ -164,6 +171,33 @@ public final class DatabaseApp {
             tableName = Database.getTable(in) ;
         } while  (tableName.isBlank());
         return tableName;
+    }
+
+    private static void reportsMenu(Connection conn, Scanner userIn) {
+        String choice;
+
+        do {
+            
+            printReports(); 
+            choice = userIn.next().toLowerCase().strip();
+
+            switch (choice) {
+                case "renting checkouts" -> add(conn, userIn);
+                case "popular item" -> printReports();
+                case "popular manufacturer" -> edit(conn, userIn);
+                case "popular drone" -> delete(conn, userIn);
+                case "items checked out" -> {
+                    ResultSet rs = search(conn, userIn);
+                    printResultSet(rs);
+                }
+                case "equipment" -> {
+                }
+                case "options" -> printReports();
+                default -> {
+                }
+            }
+
+        } while (!choice.equals("exit"));
     }
 
 
@@ -221,7 +255,7 @@ public final class DatabaseApp {
                     String pickupUID = userIn.next().toLowerCase().strip();
                     System.out.println("\nScheduled for pickup!");
                 }
-                case "reports" -> {}
+                case "report" -> reportsMenu(conn, userIn);
                 default -> {
                 }
             }
@@ -232,6 +266,11 @@ public final class DatabaseApp {
 
         userIn.close();
 
+        try {
+			conn.close();
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		}
 
     }
 
