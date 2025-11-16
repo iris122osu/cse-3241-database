@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.Scanner;
 import databaseapp.database.*;
 import databaseapp.utility.*;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.util.ArrayList;
 
 
@@ -27,6 +29,28 @@ public final class DatabaseApp {
         }
 
         TableNames = TableNames.substring(2, TableNames.length() - 1); 
+    }
+
+    private static void printResultSet(ResultSet rs) {
+        try {
+            String columns = "";
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int columnCount = rsmd.getColumnCount();
+            for (int i = 1; i <= columnCount; i++) {
+                columns = columns + rsmd.getColumnName(i) + "\t";
+            }
+            System.out.println(columns);
+            while (rs.next()) {
+                String row = "";
+                for (int i = 1; i <= columnCount; i++) {
+                    row = row + rs.getString(i) + "\t";
+                }
+                System.out.println(row);
+            }
+            
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
     }
 
 	
@@ -71,25 +95,22 @@ public final class DatabaseApp {
         System.out.println("Exit: quit the program");
     }
 
-    // Searches a particlar table for a specific id
-    private static String search(String table, String id) {
-        ArrayList<String[]> data = database.DataMap.get(table);
-        String out = "";
-        for (int i = 0; i < data.size(); i++) {
-            if (data.get(i)[0].equals(id)) {
-                out = "Record Found: ";
-                for (String s : data.get(i)) { 
-                    out = out + s + ", ";
-                }
-                break;
-            }
+    // Returns a ResultSet, or null if user exits
+    private static ResultSet search(Connection conn, Scanner userIn) {
+        String addTable = getTableFromUser(userIn);
+        if (addTable.isBlank()) {
+            return null;
         }
+        String[] columns = SQL.getPrimaryKeys(conn, addTable);
 
-        if (out.length() == 0) {
-            out = "Record for id: "+ id + " not found. ";
+        String[] values = new String[columns.length];
+
+        for(int i = 0; i < columns.length; i++){
+            System.out.println("Enter " + columns[i] + ":");
+            values[i] = Utility.getStandardInput(userIn);
         }
-
-        return out;
+        
+        return SQL.search(conn, addTable, columns, values);
     }
 
     private static String delete(String table, String id) {
@@ -111,35 +132,22 @@ public final class DatabaseApp {
         return out;
     }
 
-    private static String edit(String table, String id, int index, String replacement) {
-        ArrayList<String[]> data = database.DataMap.get(table);
-        String out = "";
-        int i = 0;
-        while (out.isEmpty() && i < data.size()) {
-            if (data.get(i)[0].equals(id)) {
-                out = "Replaced " + data.get(i)[index] + " with " + replacement + ".";
-                data.get(i)[index] = replacement;
-            }
-            i++;
-        }
+    private static String edit(Connection conn, Scanner userIn) {
 
-        if (out.isEmpty()) {
-            out = "Record for id: "+ id + " not found.";
-        }
+        
+        System.out.println("\nEnter the table to search ("+TableNames+"):");
+        String editName = userIn.next().toLowerCase().strip();
+        System.out.println("Enter the id of the record to edit (beginning with 0):");
+        String editID = userIn.next().toLowerCase().strip(); 
 
-        return out;
+        return "";
     }
 
     private static void add(Connection conn, Scanner userIn) {
-        String addTable = "";
-        do {
-            System.out.println("\nEnter the table to add to or exit ("+ TableNames +"):");
-            String in = Utility.getStandardInput(userIn);
-            if (in.toLowerCase().equals("exit")){
-                return;
-            }
-            addTable = Database.getTable(in) ;
-        } while  (addTable.isBlank());
+        String addTable = getTableFromUser(userIn);
+        if (addTable.isBlank()) {
+            return;
+        }
         ArrayList<String> columns = SQL.getColumns(conn, addTable);
         String[] newRecord = new String[columns.size()];
         for(int i = 0; i < columns.size(); i++){
@@ -147,6 +155,19 @@ public final class DatabaseApp {
             newRecord[i] = Utility.getStandardInput(userIn);
         }
         System.out.println(SQL.add(conn, addTable, newRecord));
+    }
+
+    private static String getTableFromUser(Scanner userIn) {
+        String tableName = "";
+        do {
+            System.out.println("\nEnter the table's name or 'exit' ("+ TableNames +"):");
+            String in = Utility.getStandardInput(userIn);
+            if (in.toLowerCase().equals("exit")){
+                return "";
+            }
+            tableName = Database.getTable(in) ;
+        } while  (tableName.isBlank());
+        return tableName;
     }
 
 
@@ -166,24 +187,7 @@ public final class DatabaseApp {
             switch (choice) {
                 case "add" -> add(conn, userIn);
                 case "options" -> printOptions();
-                case "edit" -> {
-                    System.out.println("\nEnter the table to search ("+TableNames+"):");
-                    String editName = userIn.next().toLowerCase().strip();
-                    System.out.println("Enter the id of the record to edit (beginning with 0):");
-                    String editID = userIn.next().toLowerCase().strip(); 
-                    String editSearchReturn = search(editName, editID);
-                    System.out.println(editSearchReturn);
-                    if (editSearchReturn.contains("not found.")) {
-                        break;
-                    }
-
-                    System.out.println("Enter the index of the item to change ("+TableNames+"):");
-                    int editIndex = userIn.nextInt(); 
-                    System.out.println("Enter the new value ("+TableNames+"):");
-                    String editReplacement = userIn.next().toLowerCase().strip();
-                    
-                    System.out.println(edit(editName, editID, editIndex, editReplacement));
-                }
+                case "edit" -> edit(conn, userIn);
                 case "delete" -> {
                     System.out.println("\nEnter the table to search ("+TableNames+"):");
                     String deleteName = userIn.next().toLowerCase().strip();
@@ -192,11 +196,8 @@ public final class DatabaseApp {
                     System.out.println(delete(deleteName, deleteID));
                 }
                 case "search" -> {
-                    System.out.println("\nEnter the table to search ("+TableNames+"):");
-                    String searchName = userIn.next().toLowerCase().strip();
-                    System.out.println("Enter the id to search:");
-                    String searchID = userIn.next().toLowerCase().strip(); 
-                    System.out.println(search(searchName, searchID));
+                    ResultSet rs = search(conn, userIn);
+                    printResultSet(rs);
                 }
                 case "rent" -> {
                     System.out.println("\nEnter Equipment ID: ");
