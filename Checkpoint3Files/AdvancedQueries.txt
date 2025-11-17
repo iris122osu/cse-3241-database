@@ -1,0 +1,20 @@
+SELECT U.FirstName, U.LastName, COUNT(R.EquipmentSerialNumber) 
+FROM Users AS U, UserRents AS R 
+WHERE U.UserID = R.UserID  
+GROUP BY U.UserID, U.FirstName, U.LastName;
+
+SELECT U.FirstName, U.LastName, U.Email 
+FROM Users AS U, UserRents AS R,
+    (SELECT AVG(Count) AS AverageUser FROM
+        (SELECT COUNT(R.EquipmentSerialNumber) AS Count
+         FROM UserRents AS R
+         GROUP BY UserID)) AS A
+WHERE U.UserID = R.UserID
+GROUP BY U.UserID, U.FirstName, U.LastName, U.Email
+HAVING COUNT(R.EquipmentSerialNumber) > A.AverageUser;
+
+SELECT E.SerialNumber, E.Model, E.Manufacturer, E.Year, COUNT(R.EquipmentSerialNumber) AS TimesRented 
+FROM Equipment AS E, Rentals AS R 
+WHERE E.SerialNumber = R.EquipmentSerialNumber 
+GROUP BY E.SerialNumber, E.Model, E.Manufacturer, E.Year 
+ORDER BY TimesRented DESC; 
