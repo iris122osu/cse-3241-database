@@ -124,6 +124,44 @@ public class SQL {
         return out;
     }
 
+    public static String edit(Connection conn, String table, String[] keys, String[] values, String[] primaryKeys, String[] primaryValues){
+        String out = null;
+        try {
+            String sql = "UPDATE " + table + " SET ";
+            int i = 0;
+            for (; i < keys.length - 1; i++) {
+                sql = sql + keys[i] + "=?, ";
+            }
+            sql = sql + keys[i] + "=? WHERE ";
+            
+            for (i = 0; i < primaryKeys.length - 1; i++) {
+                sql = sql + primaryKeys[i] + "=?, ";
+            }
+            sql = sql + primaryKeys[i] + "=?;";
+
+            System.out.println(sql);
+
+            ps = conn.prepareStatement(sql);
+            for (i = 0; i < keys.length; i++) {
+                ps.setString(i + 1, values[i]);
+            }
+            for (int j = 0; j < primaryKeys.length; j++) {
+                ps.setString(i + j + 1, primaryValues[j]);
+            }
+            int result = ps.executeUpdate();
+
+            if (result > 0) {
+                out = "Updated successfully!";
+            } else {
+                out = "Edit failed!";
+            }
+        } catch (SQLException e) {
+            out = e.getMessage();
+        }
+
+        return out;
+    }
+
 
 
 }

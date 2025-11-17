@@ -22,15 +22,12 @@ public class Utility {
         return out;
     }
 
-    public static int getNumberInput(Scanner in) {
-        int out = 0;
-        boolean assigned = false;
-        while(!assigned) {
-            try {
-                out = in.nextInt();
-                assigned = true;
-            } catch (Exception e) {
-                System.out.println("The input must only contain numbers: ");
+    public static boolean isIn (String[] arr, String search) {
+        boolean out = false;
+        for (String term : arr) {
+            if (term.equals(search)) {
+                out = true;
+                break;
             }
         }
         return out;

@@ -44,7 +44,6 @@ public final class DatabaseApp {
                 }
                 System.out.println(row);
             }
-            
         } catch (SQLException e) {
             System.err.println(e);
         }
@@ -106,12 +105,15 @@ public final class DatabaseApp {
 
     // Returns a ResultSet, or null if user exits
     private static ResultSet search(Connection conn, Scanner userIn) {
-        String addTable = getTableFromUser(userIn);
-        if (addTable.isBlank()) {
+        String searchTable = getTableFromUser(userIn);
+        if (searchTable.isBlank()) {
             return null;
         }
-        String[] columns = SQL.getPrimaryKeys(conn, addTable);
+        return search(conn, userIn, searchTable);
+    }
 
+    private static ResultSet search(Connection conn, Scanner userIn, String tableName) {
+        String[] columns = SQL.getPrimaryKeys(conn, tableName);
         String[] values = new String[columns.length];
 
         for(int i = 0; i < columns.length; i++){
@@ -119,17 +121,53 @@ public final class DatabaseApp {
             values[i] = Utility.getStandardInput(userIn);
         }
         
-        return SQL.search(conn, addTable, columns, values);
+        return SQL.search(conn, tableName, columns, values);
     }
+
+
 
     private static void edit(Connection conn, Scanner userIn) {
         String editTable = getTableFromUser(userIn);
         if (editTable.isBlank()) {
             return;
         }
-        
+        ResultSet rs = search(conn, userIn, editTable);
+        try {
+            rs.next(); 
+        } catch (SQLException e) {
+        }
 
-        return;
+        System.out.println("Enter new values:");
+        
+        ArrayList<String> columns = SQL.getColumns(conn, editTable);
+        String[] pk = SQL.getPrimaryKeys(conn, editTable);
+        String[] pv = new String[pk.length];
+        String[] columnValues = new String[columns.size() - pk.length];
+        String[] newValues = new String[columns.size() - pk.length];
+        int i = 0;
+        int j = 0;
+        int k = 0;
+        while(j < columns.size()){
+            if (!Utility.isIn(pk, columns.get(j))) {
+                System.out.println("Enter " + columns.get(j) + ":");
+                String value = Utility.getStandardInput(userIn);
+                if (!value.isBlank()) {
+                    newValues[i] = value;
+                    columnValues[i] = columns.get(j);
+                    i++;
+                }
+            } else {
+                try {
+                    pv[k] = rs.getString(columns.get(j));                    
+                } catch (SQLException e) {
+                    System.err.println(e.getMessage());
+                }
+            }
+            j++;
+            
+        }
+
+        System.out.println(SQL.edit(conn, editTable, columnValues, newValues, pk, pv));
     }
 
     private static void add(Connection conn, Scanner userIn) {
