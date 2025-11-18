@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class Utility {
 
     private static final String STRING_REGEX = "[a-zA-Z0-9@. ]+";
+    private static final String NUMBER_REGEX = "[0-9.]+";
 
     public static String getStandardInput(Scanner in) {
         String out = "";
@@ -20,6 +21,22 @@ public class Utility {
         }
 
         return out;
+    }
+
+    public static int getInt(Scanner in) {
+        String out = "";
+        while (out.isBlank() || !out.matches(NUMBER_REGEX)) {
+            try {
+                out = in.nextLine().strip();
+                if (!out.matches(NUMBER_REGEX)) {
+                    System.out.print("The input must be a number: ");
+                }
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+
+        return Integer.parseInt(out);
     }
 
     public static boolean isIn (String[] arr, String search) {

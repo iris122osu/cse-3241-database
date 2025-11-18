@@ -75,6 +75,20 @@ public class SQL {
         return rs;
     }
 
+    public static ResultSet equipmentAfterYear(Connection conn, String type, int year) {
+        ResultSet rs = null;
+        try {
+            String sql = "SELECT Model FROM EquipmentSpecifications WHERE Year < ? AND LOWER(Type) LIKE LOWER(?);";
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, "1/1/"  + year);
+            ps.setString(2, "%" + type + "%");
+            rs = ps.executeQuery();
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+        return rs;
+    }
+
     private static String generateValueList(int size) {
         String valueList = "(";
         for (int i = 0; i < size; i++) {

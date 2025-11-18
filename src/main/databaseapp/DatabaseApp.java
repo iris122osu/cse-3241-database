@@ -99,7 +99,7 @@ public final class DatabaseApp {
         System.out.println("PopularManufacturer: Find the most frequent equipment manufacturer");
         System.out.println("PopularDrone: Find the most used drone");
         System.out.println("MostCheckedOut: Find the member who has rented out the most items and the total number of items they have rented out");
-        System.out.println("Equipment: Get the name of equipment by type");
+        System.out.println("Equipment: Get the name of equipment before year by type");
         System.out.println("Options: display this list again");
         System.out.println("Exit: exit back to the main menu");
     }
@@ -118,6 +118,16 @@ public final class DatabaseApp {
 
     private static void mostCheckedOut(Connection conn, Scanner userIn) {
         ResultSet rs = SQL.mostCheckedOut(conn);
+        printResultSet(rs);
+    }
+    
+    private static void equipmentAfterYear(Connection conn, Scanner userIn) {
+        System.out.println("Enter the equipment type: ");
+        String man = Utility.getStandardInput(userIn);
+        System.out.println("Enter the year after the equipment was released: ");
+        int year = Utility.getInt(userIn);
+        
+        ResultSet rs = SQL.equipmentAfterYear(conn, man, year);
         printResultSet(rs);
     }
 
@@ -244,7 +254,7 @@ public final class DatabaseApp {
                 case "popularmanufacturer" -> {}
                 case "populardrone" -> {}
                 case "mostcheckedout" -> {mostCheckedOut(conn, userIn);}
-                case "equipment" -> {}
+                case "equipment" -> {equipmentAfterYear(conn, userIn);}
                 case "options" -> printReports();
                 case "exit" -> {return;}
                 default -> {
