@@ -87,6 +87,18 @@ public class SQL {
         return rs;
     }
 
+    public static ResultSet popularDrone(Connection conn) {
+        ResultSet rs = null;
+        try {
+            String sql = "SELECT DroneSerialNumber, max(Distance) as 'Total Distance Traveled' FROM ( SELECT R.DroneSerialNumber, sum(U.Distance) as Distance FROM Rentals as R, UserDistance as U WHERE R.UserID = U.UserID GROUP BY R.DroneSerialNumber);";
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return rs;
+    }
+
     public static ResultSet mostCheckedOut(Connection conn) {
         ResultSet rs = null;
         try {
@@ -205,9 +217,6 @@ public class SQL {
                 sql = sql + primaryKeys[i] + "=?, ";
             }
             sql = sql + primaryKeys[i] + "=?;";
-
-            System.out.println(sql);
-
             ps = conn.prepareStatement(sql);
             for (i = 0; i < keys.length; i++) {
                 ps.setString(i + 1, values[i]);

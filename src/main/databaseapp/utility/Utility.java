@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Utility {
 
-    private static final String STRING_REGEX = "[a-zA-Z0-9@. ]+";
+    private static final String STRING_REGEX = "[a-zA-Z0-9@.\\- ]+";
     private static final String NUMBER_REGEX = "[0-9.]+";
 
     public static String getStandardInput(Scanner in) {

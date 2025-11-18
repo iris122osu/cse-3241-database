@@ -125,6 +125,11 @@ public final class DatabaseApp {
         printResultSet(rs);
     }
 
+    private static void popularDrone(Connection conn) {
+        ResultSet rs = SQL.popularDrone(conn);
+        printResultSet(rs);
+    }
+
     private static void mostCheckedOut(Connection conn) {
         ResultSet rs = SQL.mostCheckedOut(conn);
         printResultSet(rs);
@@ -261,7 +266,7 @@ public final class DatabaseApp {
                 case "checkouts" -> rentingCheckouts(conn, userIn);
                 case "popularitem" -> {popularItem(conn);}
                 case "popularmanufacturer" -> {popularManufacturer(conn);}
-                case "populardrone" -> {}
+                case "populardrone" -> {popularDrone(conn);}
                 case "mostcheckedout" -> {mostCheckedOut(conn);}
                 case "equipment" -> {equipmentAfterYear(conn, userIn);}
                 case "options" -> printReports();
