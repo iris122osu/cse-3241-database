@@ -93,14 +93,27 @@ public final class DatabaseApp {
 
     private static void printReports () {
         System.out.println("");
-        System.out.println("Reports, case insensitive:");
-        System.out.println("Renting Checkouts: find the total number of equipment items rented by a single member");
-        System.out.println("Popular Item: find the most popular item in the database");
-        System.out.println("Popular Manufacturer: Find the most frequent equipment manufacturer");
-        System.out.println("Popular Drone: Find the most used drone");
-        System.out.println("Items checked out: Find the member who has rented out the most items and the total number of items they have rented out");
+        System.out.println("Reports, enter the number next to the option:");
+        System.out.println("Checkouts: find the total number of equipment items rented by a single member");
+        System.out.println("PopularItem: find the most popular item in the database");
+        System.out.println("PopularManufacturer: Find the most frequent equipment manufacturer");
+        System.out.println("PopularDrone: Find the most used drone");
+        System.out.println("MostCheckedOut: Find the member who has rented out the most items and the total number of items they have rented out");
         System.out.println("Equipment: Get the name of equipment by type");
-        System.out.println("Exit: quit the program");
+        System.out.println("Options: display this list again");
+        System.out.println("Exit: exit back to the main menu");
+    }
+
+    private static void rentingCheckouts(Connection conn, Scanner userIn) {
+        String userID = "";
+        do {
+            System.out.println("\nEnter the member's ID or 'exit':");
+            userID = Utility.getStandardInput(userIn);
+            if (userID.toLowerCase().equals("exit")){
+                return;
+            } 
+        } while (userID.isBlank());
+        printResultSet(SQL.rentingCheckouts(conn, userID));
     }
 
     // Returns a ResultSet, or null if user exits
@@ -211,27 +224,26 @@ public final class DatabaseApp {
         return tableName;
     }
 
-    private static void reportsMenu(Connection conn, Scanner userIn) {
+    private static void reportMenu(Connection conn, Scanner userIn) {
         String choice;
+        printReports(); 
 
         do {
             
-            printReports(); 
+            System.out.print("Report Choice: ");
             choice = userIn.next().toLowerCase().strip();
 
             switch (choice) {
-                case "renting checkouts" -> add(conn, userIn);
-                case "popular item" -> printReports();
-                case "popular manufacturer" -> edit(conn, userIn);
-                case "popular drone" -> delete(conn, userIn);
-                case "items checked out" -> {
-                    ResultSet rs = search(conn, userIn);
-                    printResultSet(rs);
-                }
-                case "equipment" -> {
-                }
+                case "checkouts" -> rentingCheckouts(conn, userIn);
+                case "popularitem" -> {}
+                case "popularmanufacturer" -> {}
+                case "populardrone" -> {}
+                case "mostcheckedout" -> {}
+                case "equipment" -> {}
                 case "options" -> printReports();
+                case "exit" -> {return;}
                 default -> {
+                    System.out.println("Not recognised, try again:");
                 }
             }
 
@@ -246,10 +258,11 @@ public final class DatabaseApp {
 
         Connection conn = initializeDB();
         String choice = "";
-
+        printOptions(); 
+        
         do {
             
-            printOptions(); 
+            System.out.print("Choice: ");
             choice = userIn.next().toLowerCase().strip();
 
             switch (choice) {
@@ -293,8 +306,13 @@ public final class DatabaseApp {
                     String pickupUID = userIn.next().toLowerCase().strip();
                     System.out.println("\nScheduled for pickup!");
                 }
-                case "report" -> reportsMenu(conn, userIn);
+                case "report" -> {
+                    reportMenu(conn, userIn); 
+                    printOptions();
+                }
+                case "exit" -> {/* catch so it doesn't print default*/ }
                 default -> {
+                    System.out.println("Not recognised, try again:");
                 }
             }
 

@@ -47,6 +47,22 @@ public class SQL {
         return out;
     }
 
+    
+    public static ResultSet rentingCheckouts(Connection conn, String userID) {
+        ResultSet rs = null;
+        try {
+            String sql = "SELECT count(UserID) as 'Equipment Rented:' FROM UserRents WHERE UserID=?;";
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, userID);
+            
+            rs = ps.executeQuery();
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+
+        return rs;
+    }
+
     private static String generateValueList(int size) {
         String valueList = "(";
         for (int i = 0; i < size; i++) {
