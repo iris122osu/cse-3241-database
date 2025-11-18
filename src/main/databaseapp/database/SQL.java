@@ -119,6 +119,7 @@ public class SQL {
             valueList = valueList + "?,";
         }
         valueList = valueList.substring(0, valueList.length() -1);
+        valueList = valueList + ")";
         return valueList;
     }
 
@@ -128,6 +129,7 @@ public class SQL {
             String sql = "INSERT INTO "+ table + " VALUES ";
             
             sql = sql + generateValueList(newRecord.length) + ";";
+            System.out.println(sql);
             ps = conn.prepareStatement(sql);
             for (int i = 0; i < newRecord.length; i++) {
                 ps.setString(i + 1, newRecord[i]);
