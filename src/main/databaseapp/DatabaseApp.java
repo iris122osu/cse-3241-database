@@ -116,7 +116,13 @@ public final class DatabaseApp {
         printResultSet(SQL.rentingCheckouts(conn, userID));
     }
 
-    private static void mostCheckedOut(Connection conn, Scanner userIn) {
+    private static void popularItem(Connection conn) {
+        ResultSet rs = SQL.popularItem(conn);
+        System.out.println("AJDAKDIIFEKFAFFAKBFFFSFAS");
+        printResultSet(rs);
+    }
+
+    private static void mostCheckedOut(Connection conn) {
         ResultSet rs = SQL.mostCheckedOut(conn);
         printResultSet(rs);
     }
@@ -250,10 +256,10 @@ public final class DatabaseApp {
 
             switch (choice) {
                 case "checkouts" -> rentingCheckouts(conn, userIn);
-                case "popularitem" -> {}
+                case "popularitem" -> {popularItem(conn);}
                 case "popularmanufacturer" -> {}
                 case "populardrone" -> {}
-                case "mostcheckedout" -> {mostCheckedOut(conn, userIn);}
+                case "mostcheckedout" -> {mostCheckedOut(conn);}
                 case "equipment" -> {equipmentAfterYear(conn, userIn);}
                 case "options" -> printReports();
                 case "exit" -> {return;}

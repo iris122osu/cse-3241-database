@@ -63,6 +63,18 @@ public class SQL {
         return rs;
     }
 
+    public static ResultSet popularItem(Connection conn) {
+        ResultSet rs = null;
+        try {
+            String sql = "SELECT EquipmentSerialNumber, max(Time) as 'Total Days Rented' FROM (SELECT EquipmentSerialNumber, sum((JULIANDAY(Due) - JULIANDAY(CheckOut))) as Time FROM Rentals GROUP BY EquipmentSerialNumber);";
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return rs;
+    }
+
     public static ResultSet mostCheckedOut(Connection conn) {
         ResultSet rs = null;
         try {
@@ -103,7 +115,7 @@ public class SQL {
         try {
             String sql = "INSERT INTO "+ table + " VALUES ";
             
-            sql = generateValueList(newRecord.length) + ";";
+            sql = sql + generateValueList(newRecord.length) + ";";
             ps = conn.prepareStatement(sql);
             for (int i = 0; i < newRecord.length; i++) {
                 ps.setString(i + 1, newRecord[i]);
