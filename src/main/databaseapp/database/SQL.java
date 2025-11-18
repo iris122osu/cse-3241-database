@@ -63,6 +63,18 @@ public class SQL {
         return rs;
     }
 
+    public static ResultSet mostCheckedOut(Connection conn) {
+        ResultSet rs = null;
+        try {
+            String sql = "SELECT ID as User, max(count) as 'Times Rented' FROM (SELECT count(R.EquipmentSerialNumber) as count, R.UserID as ID FROM Rentals as R GROUP BY R.UserID);";
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+        return rs;
+    }
+
     private static String generateValueList(int size) {
         String valueList = "(";
         for (int i = 0; i < size; i++) {

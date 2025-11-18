@@ -116,6 +116,11 @@ public final class DatabaseApp {
         printResultSet(SQL.rentingCheckouts(conn, userID));
     }
 
+    private static void mostCheckedOut(Connection conn, Scanner userIn) {
+        ResultSet rs = SQL.mostCheckedOut(conn);
+        printResultSet(rs);
+    }
+
     // Returns a ResultSet, or null if user exits
     private static ResultSet search(Connection conn, Scanner userIn) {
         String searchTable = getTableFromUser(userIn);
@@ -238,7 +243,7 @@ public final class DatabaseApp {
                 case "popularitem" -> {}
                 case "popularmanufacturer" -> {}
                 case "populardrone" -> {}
-                case "mostcheckedout" -> {}
+                case "mostcheckedout" -> {mostCheckedOut(conn, userIn);}
                 case "equipment" -> {}
                 case "options" -> printReports();
                 case "exit" -> {return;}
