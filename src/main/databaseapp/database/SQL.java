@@ -75,6 +75,18 @@ public class SQL {
         return rs;
     }
 
+    public static ResultSet popularManufacturer(Connection conn) {
+        ResultSet rs = null;
+        try {
+            String sql = "SELECT Manufacturer, max(Time) as 'Total Days Rented' FROM ( SELECT Manufacturer, sum((JULIANDAY(Due) - JULIANDAY(CheckOut))) as Time FROM Rentals as R, Equipment as E WHERE R.EquipmentSerialNumber = E.SerialNumber GROUP BY E.Manufacturer);";
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return rs;
+    }
+
     public static ResultSet mostCheckedOut(Connection conn) {
         ResultSet rs = null;
         try {

@@ -118,7 +118,11 @@ public final class DatabaseApp {
 
     private static void popularItem(Connection conn) {
         ResultSet rs = SQL.popularItem(conn);
-        System.out.println("AJDAKDIIFEKFAFFAKBFFFSFAS");
+        printResultSet(rs);
+    }
+
+    private static void popularManufacturer(Connection conn) {
+        ResultSet rs = SQL.popularManufacturer(conn);
         printResultSet(rs);
     }
 
@@ -257,7 +261,7 @@ public final class DatabaseApp {
             switch (choice) {
                 case "checkouts" -> rentingCheckouts(conn, userIn);
                 case "popularitem" -> {popularItem(conn);}
-                case "popularmanufacturer" -> {}
+                case "popularmanufacturer" -> {popularManufacturer(conn);}
                 case "populardrone" -> {}
                 case "mostcheckedout" -> {mostCheckedOut(conn);}
                 case "equipment" -> {equipmentAfterYear(conn, userIn);}
