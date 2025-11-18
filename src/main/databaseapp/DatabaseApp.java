@@ -1,7 +1,6 @@
 package databaseapp;
 
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Scanner;
@@ -279,73 +278,69 @@ public final class DatabaseApp {
     public static void main(String[] args) {
         getTableNames();
 
-        Scanner userIn = new Scanner(System.in);
-
-        Connection conn = initializeDB();
-        String choice = "";
-        printOptions(); 
-        
-        do {
-            
-            System.out.print("Choice: ");
-            choice = userIn.next().toLowerCase().strip();
-
-            switch (choice) {
-                case "add" -> add(conn, userIn);
-                case "options" -> printOptions();
-                case "edit" -> edit(conn, userIn);
-                case "delete" -> delete(conn, userIn);
-                case "search" -> {
-                    ResultSet rs = search(conn, userIn);
-                    printResultSet(rs);
+        Connection conn;
+        try (Scanner userIn = new Scanner(System.in)) {
+            conn = initializeDB();
+            String choice;
+            printOptions();
+            do {
+                
+                System.out.print("Choice: ");
+                choice = userIn.next().toLowerCase().strip();
+                
+                switch (choice) {
+                    case "add" -> add(conn, userIn);
+                    case "options" -> printOptions();
+                    case "edit" -> edit(conn, userIn);
+                    case "delete" -> delete(conn, userIn);
+                    case "search" -> {
+                        ResultSet rs = search(conn, userIn);
+                        printResultSet(rs);
+                    }
+                    case "rent" -> {
+                        System.out.println("\nEnter Equipment ID: ");
+                        String rentEID = userIn.next().toLowerCase().strip();
+                        System.out.println("\nEnter User ID: ");
+                        String rentUID = userIn.next().toLowerCase().strip();
+                        System.out.println("\nRented!");
+                    }
+                    case "return" -> {
+                        System.out.println("\nEnter Equipment ID: ");
+                        String returnEID = userIn.next().toLowerCase().strip();
+                        System.out.println("\nEnter User ID: ");
+                        String returnUID = userIn.next().toLowerCase().strip();
+                        System.out.println("\nReturned!");
+                    }
+                    case "deliver" -> {
+                        System.out.println("\nEnter Drone ID: ");
+                        String deliverDID = userIn.next().toLowerCase().strip();
+                        System.out.println("\nEnter Equipment ID: ");
+                        String deliverEID = userIn.next().toLowerCase().strip();
+                        System.out.println("\nEnter User ID: ");
+                        String deliverUID = userIn.next().toLowerCase().strip();
+                        System.out.println("\nDelivered!");
+                    }
+                    case "pickup" -> {
+                        System.out.println("\nEnter Drone ID: ");
+                        String pickupDID = userIn.next().toLowerCase().strip();
+                        System.out.println("\nEnter Equipment ID: ");
+                        String pickupEID = userIn.next().toLowerCase().strip();
+                        System.out.println("\nEnter User ID: ");
+                        String pickupUID = userIn.next().toLowerCase().strip();
+                        System.out.println("\nScheduled for pickup!");
+                    }
+                    case "report" -> {
+                        reportMenu(conn, userIn);
+                        printOptions();
+                    }
+                    case "exit" -> {/* catch so it doesn't print default*/ }
+                    default -> {
+                        System.out.println("Not recognised, try again:");
+                    }
                 }
-                case "rent" -> {
-                    System.out.println("\nEnter Equipment ID: ");
-                    String rentEID = userIn.next().toLowerCase().strip(); 
-                    System.out.println("\nEnter User ID: ");
-                    String rentUID = userIn.next().toLowerCase().strip();
-                    System.out.println("\nRented!");
-                }
-                case "return" -> {
-                    System.out.println("\nEnter Equipment ID: ");
-                    String returnEID = userIn.next().toLowerCase().strip(); 
-                    System.out.println("\nEnter User ID: ");
-                    String returnUID = userIn.next().toLowerCase().strip();
-                    System.out.println("\nReturned!");
-                }
-                case "deliver" -> {
-                    System.out.println("\nEnter Drone ID: ");
-                    String deliverDID = userIn.next().toLowerCase().strip();
-                    System.out.println("\nEnter Equipment ID: ");
-                    String deliverEID = userIn.next().toLowerCase().strip(); 
-                    System.out.println("\nEnter User ID: ");
-                    String deliverUID = userIn.next().toLowerCase().strip();
-                    System.out.println("\nDelivered!");
-                }
-                case "pickup" -> {
-                    System.out.println("\nEnter Drone ID: ");
-                    String pickupDID = userIn.next().toLowerCase().strip();
-                    System.out.println("\nEnter Equipment ID: ");
-                    String pickupEID = userIn.next().toLowerCase().strip(); 
-                    System.out.println("\nEnter User ID: ");
-                    String pickupUID = userIn.next().toLowerCase().strip();
-                    System.out.println("\nScheduled for pickup!");
-                }
-                case "report" -> {
-                    reportMenu(conn, userIn); 
-                    printOptions();
-                }
-                case "exit" -> {/* catch so it doesn't print default*/ }
-                default -> {
-                    System.out.println("Not recognised, try again:");
-                }
-            }
-
-        } while (!choice.equals("exit"));
-        
-
-
-        userIn.close();
+                
+            } while (!choice.equals("exit"));
+        }
 
         try {
 			conn.close();

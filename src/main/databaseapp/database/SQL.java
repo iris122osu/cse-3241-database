@@ -13,7 +13,7 @@ public class SQL {
     private static PreparedStatement ps;
 
     public static ArrayList<String> getColumns(Connection conn, String table) {
-        ArrayList<String> names = new ArrayList<String>();
+        ArrayList<String> names = new ArrayList<>();
         try {
             ps = conn.prepareStatement("SELECT * FROM "+ table + " WHERE false;");
             ResultSet rs = ps.executeQuery();
@@ -28,7 +28,7 @@ public class SQL {
     }
 
     public static String[] getPrimaryKeys(Connection conn, String table) {
-        ArrayList<String> names = new ArrayList<String>();
+        ArrayList<String> names = new ArrayList<>();
         String[] out = null;
         try {
             DatabaseMetaData dbmd = conn.getMetaData();
@@ -191,7 +191,7 @@ public class SQL {
     }
 
     public static String edit(Connection conn, String table, String[] keys, String[] values, String[] primaryKeys, String[] primaryValues){
-        String out = null;
+        String out;
         try {
             String sql = "UPDATE " + table + " SET ";
             int i = 0;
