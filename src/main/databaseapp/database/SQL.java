@@ -90,7 +90,7 @@ public class SQL {
     public static ResultSet popularDrone(Connection conn) {
         ResultSet rs = null;
         try {
-            String sql = "SELECT DroneSerialNumber, max(Distance) as 'Total Distance Traveled' FROM ( SELECT R.DroneSerialNumber, sum(U.Distance) as Distance FROM Rentals as R, UserDistance as U WHERE R.UserID = U.UserID GROUP BY R.DroneSerialNumber);";
+            String sql = "SELECT DroneSerialNumber, max(Distance) as 'Total Distance Traveled' FROM ( SELECT R.DroneSerialNumber, sum(U.Distance) * 4 as Distance FROM Rentals as R, UserDistance as U WHERE R.UserID = U.UserID GROUP BY R.DroneSerialNumber);";
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
         } catch (SQLException e) {
