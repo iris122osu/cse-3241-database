@@ -92,7 +92,7 @@ public final class DatabaseApp {
 
     private static void printReports () {
         System.out.println("");
-        System.out.println("Reports, enter the number next to the option:");
+        System.out.println("Report options, case insensitive:");
         System.out.println("Checkouts: find the total number of equipment items rented by a single member");
         System.out.println("PopularItem: find the most popular item in the database");
         System.out.println("PopularManufacturer: Find the most frequent equipment manufacturer");
