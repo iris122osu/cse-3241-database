@@ -26,11 +26,26 @@ FROM Drones as d JOIN Equipment as e ON d.OrderNumber = e.OrderNumber
 GROUP BY d.SerialNumber 
 ORDER BY NumDeliveries DESC, TotalDistance DESC; 
 
-SELECT u.UserID, u.FirstName, COUNT(r.UserID) as TotalRentals 
-	FROM Users as u JOIN Rentals as r ON u.UserID = r.UserID 
-GROUP BY u.UserID, u.FirstName 
-ORDER BY TotalRentals DESC 
-LIMIT 1; 
+SELECT Manufacturer
+FROM (
+    SELECT E.Manufacturer,
+           COUNT(*) AS rentalCount
+    FROM Rental R
+    JOIN Equipment E
+      ON R.SerialNumber = E.SerialNumber
+    GROUP BY E.Manufacturer
+) AS MCounts
+WHERE rentalCount = (
+    SELECT MAX(rentalCount)
+    FROM (
+        SELECT E.Manufacturer,
+               COUNT(*) AS rentalCount
+        FROM Rental R
+        JOIN Equipment E
+          ON R.SerialNumber = E.SerialNumber
+        GROUP BY E.Manufacturer
+    ) AS InnerCounts
+);
 
 SELECT e.SerialNumber, e.Model, SUM(julianday(r.Due - R.Checkout) AS TotalRentDays, 
 	COUNT(r.RentalNumber) AS TimesRented 
@@ -38,8 +53,8 @@ SELECT e.SerialNumber, e.Model, SUM(julianday(r.Due - R.Checkout) AS TotalRentDa
 	GROUP BY e.SerialNumber, e.Model 
 	ORDER BY TotalRentDays DESC; 
 
-SELECT DISTINCT u.UserID, User.FirstName, up.Phone 
-	FROM Users AS u JOIN UserPhone as up ON Users.UserID = UserPhone.UserID 
+SELECT DISTINCT u.UserID, u.FirstName, up.Phone 
+	FROM Users AS u JOIN UserPhone as up ON u.UserID = up.UserID 
 	JOIN Rentals as r ON u.UserID = r.UserID 
 	WHERE r.EquipmentSerialNumber = (SELECT EquipmentSerialNumber 
 					FROM Rentals 
