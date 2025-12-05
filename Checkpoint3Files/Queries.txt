@@ -15,20 +15,19 @@ WHERE R.UserID = 5001 AND R.EquipmentSerialNumber = E.SerialNumber;
 /*
 3.c
 */
-SELECT D.SerialNumber, DS.WeightCapacity
-FROM Drones as D, DroneSpecifications as DS
-WHERE D.Manufacturer = DS.Manufacturer 
-AND D.Model = DS.Model
-AND D.Year = DS.Year
-AND D.SerialNumber IN (
-    SELECT D.SerialNumber
-    FROM Drones as D
-    WHERE D.WarehouseID = 101
-    GROUP BY D.Model, D.Manufacturer, D.Year
-    HAVING count(*) < 3
-)
-ORDER BY DS.WeightCapacity
-;
+SELECT D.SerialNumber, DS.WeightCapacity 
+FROM Drones AS D 
+   		JOIN DroneSpecifications AS DS 
+        		ON D.Manufacturer = DS.Manufacturer 
+        		AND D.Model = DS.Model 
+        		AND D.Year = DS.Year 
+WHERE D.SerialNumber IN ( 
+        			SELECT D.SerialNumber 
+        			FROM Drones AS D 
+        			WHERE D.WarehouseID = 101 
+        			GROUP BY D.Model, D.Manufacturer, D.Year 
+        			HAVING COUNT(*) < 3) 
+ORDER BY DS.WeightCapacity; 
 
 /*
 3.d
@@ -46,13 +45,15 @@ AND R.DroneSerialNumber = 45004
 /*
 3.e
 */
-SELECT count(D.SerialNumber)
-FROM Drones as D, Users as U, Rentals as R
-WHERE R.ReturnStatus = 1
-AND R.UserID = U.UserID
-AND D.SerialNumber = R.DroneSerialNumber
-AND U.Address = "111 Oak St"
-;
+SQL:  
+
+SELECT COUNT(D.SerialNumber) 
+FROM Drones AS D 
+JOIN Rentals AS R 
+    ON D.SerialNumber = R.DroneSerialNumber 
+JOIN Users AS U 
+	ON R.UserID = U.UserID 
+WHERE R.ReturnStatus = 1 AND U.Address = '111 Oak St'; 
 
 /*
 3.f

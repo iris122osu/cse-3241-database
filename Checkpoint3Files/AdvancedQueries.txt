@@ -19,12 +19,15 @@ WHERE E.SerialNumber = R.EquipmentSerialNumber
 GROUP BY E.SerialNumber, E.Model, E.Manufacturer, E.Year 
 ORDER BY TimesRented DESC; 
 
-SELECT d.SerialNumber, COUNT(r.RentalNumber) as NumDeliveries, SUM(ud.Distance) TotalDistance 
-FROM Drones as d JOIN Equipment as e ON d.OrderNumber = e.OrderNumber 
-	JOIN Rentals as r ON e.SerialNumber = r.EquipmentSerialNumber 
-	JOIN UserDistance as ud ON r.UserID = ud.UserID 
-GROUP BY d.SerialNumber 
-ORDER BY NumDeliveries DESC, TotalDistance DESC; 
+SELECT d.SerialNumber, 
+	COUNT(r.RentalNumber) AS NumDeliveries, 
+	SUM(ud.Distance * 4) AS TotalDistance 
+	FROM Drones d 
+	JOIN Rentals r ON d.SerialNumber = r.DroneSerialNumber 
+	JOIN Equipment e ON r.EquipmentSerialNumber = e.SerialNumber 
+	JOIN UserDistance ud ON r.UserID = ud.UserID 
+	GROUP BY d.SerialNumber 
+	ORDER BY NumDeliveries DESC, TotalDistance DESC; 
 
 SELECT Manufacturer
 FROM (
@@ -71,5 +74,8 @@ SELECT DISTNCT e.Manufacturer
 			WHERE RentalCount > (SELECT AVG(RentalCount) 
 						FROM (SELECT COUNT(*) as RentalCount 
 							FROM Rentals 
-							GROUP BY UserID))); 
+							GROUP BY UserID
+							) AS RentalCounts
+						  )	
+						); 
 
